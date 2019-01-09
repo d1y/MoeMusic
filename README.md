@@ -1,12 +1,14 @@
-<p align='cengter'>
-  <img src="app/assets/moe.svg" width="40%">
+<p align="center">
+  <img src="app/assets/moe.svg" width="30%">
 </p>
 
 # MoeMusic
 An Electron-based Music App
 I hope it can be used to replace your girlfriend's netease-cloud-music in some special occasions.
 
-[![70473675_p0_master1200.jpg](https://i.loli.net/2019/01/12/5c3a0b4aa5d31.jpg)](https://i.loli.net/2019/01/12/5c3a0b4aa5d31.jpg)
+<p align="center">
+  <img src="https://i.loli.net/2019/01/12/5c3a0b4aa5d31.jpg" width="10%">
+</p>
 
 ## Screenshot
 [![Peek 2019-01-12 23-13.gif](https://i.loli.net/2019/01/12/5c3a0bcf57eaf.gif)](https://i.loli.net/2019/01/12/5c3a0bcf57eaf.gif)

@@ -1,0 +1,35 @@
+{
+  "name": "Moemusic",
+  "version": "0.0.1",
+  "description": "a moe music",
+  "main": "main.js",
+  "scripts": {
+		"test": "cp -rf node_modules/mdui/dist app",
+    "start": "electron . --enable-logging --debug",
+    "dist": "electron-builder .",
+    "server": "cd app && browser-sync --server --files '**' ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/d1y/moemusic.git"
+  },
+  "keywords": [
+    "Electron",
+    "moe",
+    "music"
+  ],
+  "author": "d1y",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/d1y/moemusic.git/issues"
+  },
+  "homepage": "https://github.com/d1y/moemusic.git#readme",
+  "devDependencies": {
+    "electron": "^3.0.13",
+    "electron-builder": "^20.38.3"
+  },
+  "dependencies": {
+    "electron-debug": "^1.5.0",
+    "mdui": "^0.4.2"
+  }
+}

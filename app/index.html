@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Moemusic</title>
+    <link rel="stylesheet" href="dist/css/mdui.min.css">
+    <link rel="stylesheet" href="main.css">
+  </head>
+  <body>
+    <div id="app">
+      <div id="bg"></div>
+      <div id="topbar" class="mdui-clearfix">
+        <div class="mdui-float-left">
+          <div class="ctrl">
+            <span id="window-closed"></span>
+            <span id="window-min"></span>
+            <span id="window-max"></span>
+          </div>
+        </div>
+        <div class="mdui-float-left"></div>
+        <div class="mdui-float-right">
+          <div id="g_menu">
+            <i class="g_menu_1"></i>
+            <i class="g_menu_2"></i>
+            <i class="g_menu_3"></i>
+          </div>
+        </div>
+      </div>
+      <div class="mdui-container-fluid app-content">
+        <div class="tool_bar mdui-text-center">
+          <p>
+            <label>搜索: </label>
+            <input type="text" id="g_search" placeholder="search in." value="Atmozfears">
+            <input type="submit" id="g_submit" value="检索">
+          </p>
+        </div>
+        <hr>
+        <div id="result">
+          <img src="./loli.gif" alt="" style="display: block;width: 100%;height:100%">
+        </div>
+      </div>
+      <div id="musicPlayer" class="mdui-shadow-10 mdui-clearfix">
+        <div class="progress-bar">
+          <div id="progress-bar">
+            <div id="pb1"></div>
+            <div id="pb1-copy"></div>
+          </div>
+          <div id="prBar">
+            <div id="pb2"></div>
+          </div>
+        </div>
+        <div id="musicCover" class="mdui-float-left"></div>
+        <div class="_title mdui-float-left">
+          <p id="song_title"></p>
+          <p id="song_by"></p>
+        </div>
+        <div class="mdui-float-right tools">
+          <div class="playStatus mdui-float-left">
+            <button id="player-prev">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 6h2v12H6zm3.5 6l8.5 6V6z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            </button>
+
+            <button id="player-ctrl">
+              <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>
+              <span><svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/><path d="M0 0h24v24H0z" fill="none"/></svg></span>
+            </button>
+
+            <button id="player-next">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M6 18l8.5-6L6 6v12zM16 6v12h2V6h-2z"/><path d="M0 0h24v24H0z" fill="none"/></svg>
+            </button>
+
+          </div>
+          <div class="download mdui-float-left">
+            <a href="javascript:void(0)" id="download-file">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#000000"><path d="M 11 2 L 11 4 L 13 4 L 13 2 L 11 2 z M 11 6 L 11 14.585938 L 7.7070312 11.292969 L 6.2929688 12.707031 L 12 18.414062 L 17.707031 12.707031 L 16.292969 11.292969 L 13 14.585938 L 13 6 L 11 6 z M 2 17 L 2 20 C 2 21.093063 2.9069372 22 4 22 L 20 22 C 21.093063 22 22 21.093063 22 20 L 22 17 L 20 17 L 20 20 L 4 20 L 4 17 L 2 17 z" fill="#000000"/></svg>
+            </a>
+          </div>
+          <div class="share mdui-float-left">
+            <div id="volumeWrap">
+              <div id="volumeBar"></div>
+              <div id="volume-bar"></div>
+            </div>
+            <button id="volume">
+              <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M4.743 7.161l-1.934-1.936 1.412-1.414 1.934 1.936c-.52.42-.993.894-1.412 1.414zm-2.062 5.839c0-.338.018-.671.053-.999h-2.734v1.998h2.734c-.035-.328-.053-.661-.053-.999zm9.319-9.316c.337 0 .67.019.999.053v-2.737h-1.997v2.737c.328-.035.661-.053.998-.053zm7.257 3.477l1.934-1.936-1.412-1.414-1.934 1.936c.52.42.993.894 1.412 1.414zm2.009 4.84c.035.328.054.661.054.999s-.019.671-.054.999h2.734v-1.998h-2.734zm-16.523 6.861l-1.75 1.724 1.411 1.414 1.75-1.724c-.519-.42-.992-.894-1.411-1.414zm13.102 1.414l1.769 1.724 1.412-1.414-1.769-1.724c-.419.52-.892.994-1.412 1.414zm-9.359-15.929c.202-.082.405-.156.61-.223l-.648-1.569-1.318.547.649 1.568c.23-.117.466-.225.707-.323zm6.476-.203l.659-1.564 1.314.555-.659 1.564c-.248-.127-.502-.245-.763-.351-.181-.075-.366-.142-.551-.204zm5.371 4.643l1.567-.649.546 1.318-1.568.649c-.067-.206-.141-.409-.223-.611-.097-.241-.205-.477-.322-.707zm-16.666 8.45l-1.567.649-.546-1.319 1.568-.65c.067.206.141.41.223.612.097.241.205.476.322.708zm18.755-.601l-.555 1.315-1.562-.659c.127-.248.245-.502.35-.763l.204-.553 1.563.66zm-19.281-6.589l-1.563-.66.555-1.315 1.562.66c-.128.247-.245.502-.351.762l-.203.553zm8.859-4.366c-4.036 0-7.319 3.283-7.319 7.319s3.283 7.319 7.319 7.319 7.319-3.283 7.319-7.319-3.283-7.319-7.319-7.319zm-2.275 6.626l-2.158-2.158 1.413-1.415 2.158 2.158-1.413 1.415z"/></svg>
+            </button>
+            <button id="share-ins">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path fill="none" d="M0 0h24v24H0V0z"/><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92c0-1.61-1.31-2.92-2.92-2.92zM18 4c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zM6 13c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm12 7.02c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z"/></svg>
+            </button>
+          </div>
+          <div class="mdui-float-left playlist">
+            <button id="playlist">
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="#000000"><g id="surface1" fill="#000000"><path style=" " d="M 2 8 L 2 14 L 8 14 L 8 8 Z M 10 8 L 10 10 L 30 10 L 30 8 Z M 4 10 L 6 10 L 6 12 L 4 12 Z M 10 12 L 10 14 L 26 14 L 26 12 Z M 2 18 L 2 24 L 8 24 L 8 18 Z M 10 18 L 10 20 L 30 20 L 30 18 Z M 4 20 L 6 20 L 6 22 L 4 22 Z M 10 22 L 10 24 L 26 24 L 26 22 Z " fill="#000000"/></g></svg>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div id="share">
+        <div>
+          <p class="qrcodeWrap">
+            <img src="http://mobile.qq.com/qrcode?url=https://music.163.com" alt="" class="qrcode">
+          </p>
+          <p class="share-name">She goes</p>
+          <p class="share-by">Atmozfears/Adrenalize</p>
+          <div id="share-close"></div>
+        </div>
+      </div>
+      <div id="player">
+        <ul></ul>
+      </div>
+    </div>
+    <audio id="music"></audio>
+</body>
+<script src="main.js"></script>
+<script src="music.js"></script>
+</html>

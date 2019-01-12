@@ -2,8 +2,6 @@ html,
 body{
   width: 100%;
   height: 100%;
-  -ms-overflow-style: scrollbar;
-  -webkit-app-region:drag;
   font-family: Monaco;
   overflow: hidden;
 }
@@ -25,9 +23,15 @@ textarea {
   left: 0;
   width: 100%;
   height: 30px;
-  /* background: rgba(255,255,255,.8); */
-  -webkit-app-region: drag;
+  background: rgba(232, 232, 232, 0.5);
   z-index: 88;
+}
+.drag-wrap{
+  position: relative;
+  left: 10px;
+  width: 760px;
+  height: 30px;
+  -webkit-app-region: drag;
 }
 .ctrl{
   -webkit-user-select: none;
@@ -44,7 +48,7 @@ textarea {
   margin-left: 5px;
   cursor: pointer;
   -webkit-user-select: none;
- -webkit-app-region: drag;
+ /* -webkit-app-region: drag; */
 }
 #window-closed{
   background: #f85955;
@@ -89,18 +93,6 @@ textarea {
 #g_menu .g_menu_3{
   bottom: 0;
 }
-/* #g_menu:hover .g_menu_1{
-  left: 0px;
-  width: 50%;
-  top: 8px;
-  transform: rotateZ(-45deg);
-}
-#g_menu:hover .g_menu_3{
-  left: 0px;
-  width: 50%;
-  bottom: 7px;
-  transform: rotateZ(45deg);
-} */
 .app-content{
   width: 100%;
   height: 100%;
@@ -350,8 +342,19 @@ textarea {
   width: 100%;
   height: 100%;
   opacity: 0;
+  background: rgba(255,255,255,1);
+  background-size: cover;
   transition: all .3s;
   transform: translateX(-80rem);
+}
+#share:after{
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background: url(attr(pic))
 }
 #share.show{
   opacity: 1;
@@ -392,14 +395,6 @@ textarea {
 #share .share-by{
   font-size: 12px;
 }
-#share #share-close{
-  position: absolute;
-  top: -282px;
-  left: -376px;
-  width: 12px;
-  height: 12px;
-  background: #333;
-}
 .progress-bar{
   position: absolute;
   top: 0;
@@ -439,8 +434,12 @@ textarea {
   height: 100%;
   background: #e8e1e1;
   z-index: 2333;
+  overflow-y: auto;
   transform: translateX(100rem);
-  transition: all 2s;
+  transition: all .5s;
+}
+#player.show{
+  transform: translateX(0);
 }
 #player ul li {
   position: relative;

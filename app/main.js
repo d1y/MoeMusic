@@ -1,26 +1,26 @@
 (function () {
-  const {BrowserWindow,shell} = require('electron')
+  const {BrowserWindow,shell} = require('electron').remote
   const path = require('path')
   ctrlInit = (c,m,b)=> {
       // Minimize task
       document.getElementById(m).addEventListener("click", (e) => {
-          var window = BrowserWindow.getFocusedWindow();
-          window.minimize();
+          console.log(BrowserWindow);
+          var mainWindow = BrowserWindow.getFocusedWindow();
+          mainWindow.minimize();
       });
-
       // Maximize window
       document.getElementById(b).addEventListener("click", (e) => {
-          var window = BrowserWindow.getFocusedWindow();
-          if(window.isMaximized()){
-              window.unmaximize();
+          var mainWindow = BrowserWindow.getFocusedWindow();
+          if(mainWindow.isMaximized()){
+              mainWindow.unmaximize();
           }else{
-              window.maximize();
+              mainWindow.maximize();
           }
       });
       // Close app
       document.getElementById(c).addEventListener("click", (e) => {
-          var window = BrowserWindow.getFocusedWindow();
-          window.close();
+          var mainWindow = BrowserWindow.getFocusedWindow();
+          mainWindow.close();
       });
   };
   document.onreadystatechange =  () => {
@@ -113,15 +113,15 @@ let result = document.getElementById('result'),
             s = s.substr(0,s.length-1)
             List.push({
               'index': index,
-              'href': `https://music.163.com/#/song?id=${item.id}`,
+              'href': `https://music.163.com/m/song?id=${item.id}`,
               'id': item.id,
               'pic': item.al.picUrl,
-              'url': `https://music.163.com/song/media/outer/url?id=${item.id}.mp3`,
+              'url': playAPI_url.replace('fuck',item.id),
               'name': item.name,
               'by': s
             })
-            link.setAttribute('data-href',`https://music.163.com/#/song?id=${item.id}`)
-            link.setAttribute('data-url',`https://music.163.com/song/media/outer/url?id=${item.id}.mp3`)
+            link.setAttribute('data-href',`https://music.163.com/m/song?id=${item.id}`)
+            link.setAttribute('data-url',playAPI_url.replace('fuck',item.id))
             link.innerHTML = `<span>${s} - ${item.name}</span>`
             link.addEventListener('click',(e)=>{
               PLAY(item.al.picUrl,item.name,s,link.getAttribute('data-url'),link.getAttribute('data-href'),index)
@@ -148,8 +148,8 @@ let playCtrl = document.getElementById('player-ctrl'),
       List.forEach((item,index)=>{
         let li = document.createElement('li'),
             link = document.createElement('a')
-            link.setAttribute('data-href',`https://music.163.com/#/song?id=${item.id}`)
-            link.setAttribute('data-url',`https://music.163.com/song/media/outer/url?id=${item.id}.mp3`)
+            link.setAttribute('data-href',`https://music.163.com/m/song?id=${item.id}`)
+            link.setAttribute('data-url',playAPI_url.replace('fuck',item.id))
             link.innerHTML = `<span>${item.by} - ${item.name}</span>`
             link.addEventListener('click',(e)=>{
               PLAY(item.pic,item.name,item.by,link.getAttribute('data-url'),link.getAttribute('data-href'),index)
@@ -170,17 +170,16 @@ let playCtrl = document.getElementById('player-ctrl'),
         let msg = {
           title: `正在播放: ${t}`,
           body: `来自: ${b}`,
-          icon: `http://0.0.0.0:3000/ass/moe.png`
+          icon: `http://0.0.0.0:3000/assets/moe.png`
         }
         new window.Notification(msg.title,msg)
       }
       let timeId
       setTimeout(()=>{
         timeId = setInterval(()=>{
-            // console.log((Music.currentTime / Music.duration * 100).toString()+"%")
             document.getElementById('pb1').style
             .width = (Music.currentTime / Music.duration * 100).toString()+"%"
-        },100)
+        },1000)
       },3000)
     },
     playNext = document.getElementById('player-next'),
@@ -210,8 +209,11 @@ let playCtrl = document.getElementById('player-ctrl'),
             mass = 128
       }
       _playIndex = INDEX
+      Music.setAttribute('data-pic',bg)
       Music.setAttribute('src',src)
       Music.setAttribute('data-share',share)
+      Music.setAttribute('data-name',name)
+      Music.setAttribute('data-by',by)
     }
 playCtrl.getElementsByTagName('span')[0].className = 'hide'
 playCtrl.onclick = () =>{
@@ -246,6 +248,7 @@ document.getElementById('download-file').addEventListener('click',()=>{
 document.getElementById('volume').addEventListener('click',(e)=>{
   document.getElementById('volumeWrap').className = 'show'
 },false)
+document.getElementById('volumeBar').style.width = (Music.volume*100).toString() + "%"
 document.getElementById('volume-bar').addEventListener('click',(e)=>{
   document.getElementById('volumeBar').style
   .width = (e.offsetX / document.getElementById('volumeWrap').clientWidth * 100).toString() + '%'
@@ -257,16 +260,19 @@ document.getElementById('volume-bar').addEventListener('click',(e)=>{
   Music.volume = e.offsetX / document.getElementById('volumeWrap').clientWidth
 })
 document.getElementById('share-ins').addEventListener('click',()=>{
+  document.getElementsByClassName('qrcode')[0].
+  setAttribute('src',`http://mobile.qq.com/qrcode?url=${Music.getAttribute('data-share')}`)
+  document.getElementsByClassName('share-name')[0].innerText = Music.getAttribute('data-name')
+  document.getElementsByClassName('share-by')[0].innerText = Music.getAttribute('data-by')
   document.getElementById('share').className = 'show'
+  document.getElementById('share').style
+  .backgroundImage = `url(${Music.getAttribute('data-pic')})`
 })
 document.getElementById('share').addEventListener('click',()=>{
   if ( document.getElementById('share').className == 'show' ){
       document.getElementById('share').className = ''
       return
   }
-})
-document.getElementById('share-close').addEventListener('click',()=>{
-  document.getElementById('share').className = ''
 })
 document.getElementById('musicPlayer').addEventListener('mouseover',()=>{
   document.getElementById('progress-bar').style
@@ -282,4 +288,19 @@ document.getElementById('pb1-copy').addEventListener('click',(e)=>{
   document.getElementById('pb1').style.width = (tmp * 100).toString() + '%'
   Music.play()
 })
+document.getElementById('playlist').onclick = ()=> PY.className = 'show'
+document.getElementsByTagName('body')[0].onclick = (e)=> {
+  let isShow = 0
+  e.path.forEach((item)=>{
+    if (item === document.getElementById('playlist')){
+      isShow = 1
+      return
+    }
+  });
+  if (isShow){
+    return
+  } else {
+    PY.className = ''
+  }
+}
 })();

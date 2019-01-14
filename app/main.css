@@ -422,6 +422,9 @@ textarea {
   background: linear-gradient(to right, #bdc3c7, #2c3e50);
   opacity: .8;
 }
+#progress-bar:hover #pb1:before{
+  opacity: .3;
+}
 #pb1-copy{
   background: none;
   cursor: pointer;
@@ -454,17 +457,16 @@ textarea {
   left: -40px;
   width: 0;
   height: 4px;
-  /* opacity: 0; */
   background: rgba(0,0,0,.5);
   transition: all .3s;
 }
 #player ul li:hover:before{
-  opacity: .5;
+  opacity: .8;
   width: 40px;
   left: -40px;
 }
 #player ul li:hover{
-  text-shadow: 2px 8px 6px rgba(0,0,0,0.1), 0px -5px 35px rgba(255,255,255,0.1);
+  color: #883939;
 }
 #player ul li a{
   display: block;

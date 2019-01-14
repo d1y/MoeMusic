@@ -4,7 +4,6 @@
   ctrlInit = (c,m,b)=> {
       // Minimize task
       document.getElementById(m).addEventListener("click", (e) => {
-          console.log(BrowserWindow);
           var mainWindow = BrowserWindow.getFocusedWindow();
           mainWindow.minimize();
       });

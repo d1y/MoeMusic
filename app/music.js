@@ -34,6 +34,9 @@
   getID = (e) => {
     return document.getElementById(e)
   },
+  getFirst = (e) => {
+    return document.getElementsByClassName(e)[0]
+  }
   SEARCH = (e) => {
     let v = getID('g_search').value,
         tmpList = []
@@ -88,7 +91,8 @@
               }
             })
             if (!isListPush) {
-              List.push(tmpList[index])
+              window.List.push(tmpList[index])
+              window.localStorage.setItem('playlist',JSON.stringify(List))
             }
             Music.setAttribute('index', List.length - 1)
             PLAY(item.al.picUrl, item.name, s, link.getAttribute('data-url'), link.getAttribute('data-href'), List[List.length-1])
@@ -125,6 +129,29 @@
       timeId = setInterval(() => {
         getID('pb1').style
           .width = (Music.currentTime / Music.duration * 100).toString() + "%"
+        if (Music.ended){
+          switch (mode) {
+            case 'order':
+                Music.removeAttribute('loop')
+                clearInterval(timeId)
+                PN(true)
+                break;
+            case 'random':
+                Music.removeAttribute('loop')
+                clearInterval(timeId)
+                // 作用域不同,所以每次获取到一个随机数必须是一个函数!
+                let dom = () => {
+                  return Math.floor(Math.random() * (List.length - 1) + 1)
+                }, e = dom()
+                Music.setAttribute('index',e)
+                PLAY(List[e].pic, List[e].name, List[e].by, List[e].url, List[e].href)
+                musicStatus()
+                break;
+            case 'loop':
+                Music.setAttribute('loop','loop')
+                break;
+          }
+        }
       }, 1000)
     }, 2000)
   }
@@ -140,23 +167,11 @@
       .innerText = by
     getID('download-file')
       .setAttribute('download', src)
-    mass = new Number()
-    switch (JSON.parse(window.localStorage.getItem('setting')).mass) {
-      case 320:
-        mass = 320
-        break;
-      case 192:
-        mass = 192
-        break;
-      default:
-        mass = 128
-    }
     Music.setAttribute('data-pic', bg)
     Music.setAttribute('src', src)
     Music.setAttribute('data-share', share)
     Music.setAttribute('data-name', name)
     Music.setAttribute('data-by', by)
-    List = List || {}
     PY.getElementsByTagName('ul')[0].innerHTML = ''
     List.forEach((item, index) => {
       let li = document.createElement('li'),
@@ -179,8 +194,22 @@
       PY = getID('player'),
       API = 'https://api.imjad.cn/cloudmusic/',
       playAPI_url = "https://music.163.com/song/media/outer/url?id=fuck.mp3",
-      List = []
+      mode = 'order'
   // ===========
+  let auto = ()=>{
+    window.List = JSON.parse(localStorage.getItem('playlist')) || [{
+      "by":"Hardwell/Atmozfears/M.BRONX",
+      "href":"https://music.163.com/m/song?id=493043002",
+      "id":493043002,
+      "index":1,
+      "name":"All That We Are Living For",
+      "pic":"https://p2.music.126.net/yWVujDesdI4GMbGjmOFiiQ==/18991864346840353.jpg",
+      "url":"https://music.163.com/song/media/outer/url?id=493043002.mp3"
+    }]
+    let autoLastPlay = List[List.length-1]
+    PLAY(autoLastPlay.pic, autoLastPlay.name, autoLastPlay.by, autoLastPlay.url, autoLastPlay.href)
+  }
+  auto()
   getID('g_submit').addEventListener('click', SEARCH, false)
   getID('g_search').addEventListener('keydown', (e) => {
     if (e.code == 'Enter') {
@@ -206,8 +235,6 @@
         ie--
       }
     }
-    console.log(List[ie]);
-    console.log(ie);
     PLI = List[ie]
     Music.setAttribute('index',ie)
     PLAY(PLI.pic, PLI.name, PLI.by, PLI.url, PLI.href)
@@ -233,10 +260,13 @@
     Music.volume = e.offsetX / getID('volumeWrap').clientWidth
   })
   getID('share-ins').addEventListener('click', () => {
-    document.getElementsByClassName('qrcode')[0].
+    if (!Music.getAttribute('data-share')) {
+      return
+    }
+    getFirst('qrcode').
     setAttribute('src', `http://mobile.qq.com/qrcode?url=${Music.getAttribute('data-share')}`)
-    document.getElementsByClassName('share-name')[0].innerText = Music.getAttribute('data-name')
-    document.getElementsByClassName('share-by')[0].innerText = Music.getAttribute('data-by')
+    getFirst('share-name').innerText = Music.getAttribute('data-name')
+    getFirst('share-by').innerText = Music.getAttribute('data-by')
     getID('share').className = 'show'
     getID('share').style
       .backgroundImage = `url(${Music.getAttribute('data-pic')})`
@@ -280,9 +310,22 @@
       PY.className = ''
     }
   }
-  // window.localStorage.setItem('setting', JSON.stringify({
-  //   "mass": 128,
-  //   "dark": false,
-  //   "API": 1
-  // }))
+  getFirst('play-mode').onclick = ()=>{
+    getFirst('mode-wrap').className = 'mode-wrap show'
+  }
+  getFirst('mode-wrap').onclick = ()=>{
+    getFirst('mode-wrap').className = 'mode-wrap'
+  }
+  getID('mode-loop').onclick = ()=>{
+    Music.setAttribute('loop','loop')
+    mode = 'loop'
+  }
+  getID('mode-random').onclick = ()=> {
+    Music.removeAttribute('loop')
+    mode = 'random'
+  }
+  getID('mode-order').onclick = ()=> {
+    Music.removeAttribute('loop')
+    mode = 'order'
+  }
 })()

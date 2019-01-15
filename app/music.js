@@ -328,4 +328,20 @@
     Music.removeAttribute('loop')
     mode = 'order'
   }
+  let siriWave = new SiriWave({
+	  container: document.getElementById('siri-container'),
+	  width: 900,
+	  height: 100,
+    style: 'ios'
+  });
+  siriWave.start()
+  getID('musicCover').addEventListener('click',()=>{
+    let tmpBg = Music.getAttribute('data-pic')
+    getFirst('player-cover').className = 'player-cover show'
+    getID('last').style
+    .backgroundImage = `url(${tmpBg})`
+    getFirst('player-cover').style
+    .backgroundImage = `url(${tmpBg})`
+  })
+  getID('player-cover-close').addEventListener('click',()=>getFirst('player-cover').className = 'player-cover')
 })()

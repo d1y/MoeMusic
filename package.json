@@ -6,7 +6,10 @@
   "scripts": {
 		"test": "cp -rf node_modules/mdui/dist app",
     "start": "electron . --enable-logging --debug",
-    "dist": "electron-builder .",
+    "dist-win": "electron-builder --win --x64",
+    "dist-osx": "electron-builder -m --x64",
+    "dist-linux": "electron-builder -l deb tar.xz",
+    "dist-all": "electron-builder -mwl",
     "server": "cd app && browser-sync --server --files '**' ."
   },
   "repository": {

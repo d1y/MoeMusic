@@ -17,11 +17,11 @@ createWindow = ()=> {
     host: 'localhost:3000',
     path: '/'
   }))
-  // win.loadURL(url.format({
-  //   pathname: path.join(__dirname,'app/index.html'),
-  //   protocol: 'file:',
-  //   slashes: true
-  // }))
+  win.loadURL(url.format({
+    pathname: path.join(__dirname,'app/index.html'),
+    protocol: 'file:',
+    slashes: true
+  }))
   win.webContents.openDevTools()
   win.on('closed', () => {
     win = null

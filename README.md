@@ -37,6 +37,7 @@ Thank you all for helping me. Thank you.
 | `ctrl+m` & `⌘+m`       | Global menu  |
 | `ctrl+a` & `⌘+a`       | Playlist menu |
 | `ctrl+p` & `⌘+p`       | Global player |
+| `ctrl+f`       | search |
 | `esc` | exit all Two level menu |
 
 ##  ❤️ Open source ❤️

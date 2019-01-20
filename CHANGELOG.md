@@ -24,6 +24,7 @@
 | `ctrl+m` & `⌘+m`       | Global menu  |
 | `ctrl+a` & `⌘+a`       | Playlist menu |
 | `ctrl+p` & `⌘+p`       | Global player |
+| `ctrl+f`       | search |
 | `esc` | exit all Two level menu |
 
 ## V-0.0.1 - alpha

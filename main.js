@@ -1,4 +1,4 @@
-const {app,BrowserWindow} = require('electron')
+const {app,BrowserWindow,menu,Tray} = require('electron')
 const path = require('path')
 const url = require('url')
 let win
@@ -10,7 +10,10 @@ createWindow = ()=> {
     frame: false,
     transparent: true,
     resizable: false,
-    icon: "app/ass/moe.png"
+    maximizable: false,
+    center: true,
+    skipTaskbar: true,
+    icon: './app/assets/moe.png'
   })
   win.loadURL(url.format({
     protocol: 'http:',
@@ -22,7 +25,9 @@ createWindow = ()=> {
     protocol: 'file:',
     slashes: true
   }))
-  win.webContents.openDevTools()
+  // win.webContents.openDevTools()
+  win.webContents.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8');
+
   win.on('closed', () => {
     win = null
   })

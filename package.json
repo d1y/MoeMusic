@@ -1,16 +1,54 @@
 {
   "name": "Moemusic",
-  "version": "0.0.1",
+  "version": "0.0.1-beta",
   "description": "a moe music",
   "main": "main.js",
   "scripts": {
-		"test": "cp -rf node_modules/mdui/dist app",
     "start": "electron . --enable-logging --debug",
     "dist-win": "electron-builder --win --x64",
     "dist-osx": "electron-builder -m --x64",
     "dist-linux": "electron-builder -l deb tar.xz",
     "dist-all": "electron-builder -mwl",
-    "server": "cd app && browser-sync --server --files '**' ."
+    "server": "cd app && browser-sync --server --files '**' .",
+    "api": "rm -rf app/API && git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git app/API && cd app/API && sudo cnpm install"
+  },
+  "build": {
+    "productName": "moemusic",
+    "appId": "gh.d1y.moemusic",
+    "compression": "maximum",
+    "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
+    "mac": {
+      "icon": "./app/assets/moe.icns"
+    },
+    "linux": {
+      "target": [
+        "deb",
+        "rpm",
+        "AppImage"
+      ],
+      "icon": "./app/assets/moe.png",
+      "category": "Music",
+      "executableName": "moemusic"
+    },
+    "win": {
+      "target": "nsis",
+      "icon": "./app/assets/moe.png"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": true,
+      "allowToChangeInstallationDirectory": true
+    },
+    "directories": {
+      "output": "./release"
+    },
+    "publish": [
+      {
+        "provider": "github",
+        "owner": "d1y",
+        "repo": "moemusic"
+      }
+    ]
   },
   "repository": {
     "type": "git",
@@ -32,7 +70,6 @@
     "electron-builder": "^20.38.3"
   },
   "dependencies": {
-    "electron-debug": "^1.5.0",
-    "mdui": "^0.4.2"
+    "request": "2.88.0"
   }
 }

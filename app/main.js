@@ -1,6 +1,5 @@
 (function () {
   const {BrowserWindow,shell} = require('electron').remote
-  const path = require('path')
   ctrlInit = (c,m,b)=> {
       // Minimize task
       document.getElementById(m).addEventListener("click", (e) => {
@@ -9,7 +8,9 @@
       });
       // Maximize window
       document.getElementById(b).addEventListener("click", (e) => {
+          return
           var mainWindow = BrowserWindow.getFocusedWindow();
+          if(process.platform == 'win32') return
           if(mainWindow.isMaximized()){
               mainWindow.unmaximize();
           }else{
@@ -32,5 +33,8 @@
           return false
         }
       }
-  };
+      document.getElementById('download-file').onclick = ()=>{
+        shell.openExternal(document.getElementById('music').getAttribute('src'))
+      }
+};
 })();

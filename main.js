@@ -1,8 +1,13 @@
-const {app,BrowserWindow,menu,Tray} = require('electron')
+const {
+  app,
+  BrowserWindow,
+  menu,
+  Tray
+} = require('electron')
 const path = require('path')
 const url = require('url')
 let win
-createWindow = ()=> {
+createWindow = () => {
   win = new BrowserWindow({
     width: 900,
     height: 600,
@@ -21,13 +26,21 @@ createWindow = ()=> {
     path: '/'
   }))
   win.loadURL(url.format({
-    pathname: path.join(__dirname,'app/index.html'),
+    pathname: path.join(__dirname, 'app/index.html'),
     protocol: 'file:',
     slashes: true
   }))
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
   win.webContents.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8');
-
+  const shouldQuit = app.makeSingleInstance((commandLine, workingDir) => {
+    if (win) {
+      win.isMinimized() && mainWindow.restore()
+      win.focus()
+    }
+  })
+  if (shouldQuit) {
+    app.quit()
+  }
   win.on('closed', () => {
     win = null
   })

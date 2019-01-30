@@ -16,9 +16,10 @@
     "productName": "moemusic",
     "appId": "gh.d1y.moemusic",
     "compression": "maximum",
+    "copyright": "Copyright © 2018 ${author}",
     "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "mac": {
-      "icon": "./app/assets/moe.icns"
+      "icon": "app/assets/icon.icns"
     },
     "linux": {
       "target": [
@@ -48,18 +49,19 @@
         "owner": "d1y",
         "repo": "moemusic"
       }
-    ]
+    ],
+    "asar": true,
+    "electronDownload": {
+      "mirror": "http://npm.taobao.org/mirrors/electron/"
+    }
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/d1y/moemusic.git"
-  },
+  "repository": "git+https://github.com/d1y/moemusic.git",
   "keywords": [
     "Electron",
     "moe",
     "music"
   ],
-  "author": "d1y",
+  "author": "d1y <chenhonhou@gmail.com> (http://kozo4.ooo)",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/d1y/moemusic.git/issues"

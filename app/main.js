@@ -35,4 +35,7 @@ document.onreadystatechange = () => {
   document.getElementById('download-file').onclick = () => {
     shell.openExternal(document.getElementById('music').getAttribute('src'))
   }
+  document.getElementById('fork').onclick = () => {
+    shell.openExternal()
+  }
 };

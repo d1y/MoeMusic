@@ -35,7 +35,7 @@ $(() => {
     $('#player ul').html('')
   })
   $('#search-played').on('keydown', b => {
-    if ($('#search-played').val() == ''){
+    if ($('#search-played').val() == '') {
       LL(List)
       return
     }
@@ -99,8 +99,17 @@ $(() => {
     return false
   })
   $('#btnSearch').on('click', SEARCH)
-  $("#btnLogin").on('click', () => $('.login-wrap').addClass('show'))
-  $('#search-close').on('click', () => $('.search-wrap').removeClass('show'))
+  $("#btnLogin").on('click', () => {
+    $('.login-wrap').addClass('show')
+    $('.gMenu').removeClass('show')
+  })
+  $('.gMenu,#g_menu').on('click',e=>{
+    e.stopPropagation()
+  })
+  $('#search-close').on('click', () => {
+    $('.search-wrap').removeClass('show')
+    $('#g_search').val('')
+  })
   $('#login-exit').on('click', () => $('.login-wrap').removeClass('show'))
   $('.login-user').on('focus', () => $('.login-wrap .login-img').css({
     'backgroundColor': 'yellow'
@@ -122,7 +131,14 @@ $(() => {
     }
   })
   let search = (va) => {
-    let l = window.localStorage.getItem('search_limit') || '20'
+    let l = window.localStorage.getItem('search_limit') || 20,
+        h = JSON.parse(window.localStorage.getItem('history_list')) || []
+    if (h.length < 5){
+      h.splice(0,0,va)
+    }else if (h.length >= 5){
+      h.splice(0,1,va)
+    }
+    window.localStorage.setItem('history_list',JSON.stringify(h))
     api.search({
       keywords: va,
       limit: l
@@ -271,7 +287,8 @@ $(() => {
         let msg = {
           title: `正在播放: ${getID('music').getAttribute('data-name')}`,
           body: `来自: ${getID('music').getAttribute('data-by')}`,
-          icon: `./assets/moe.png`
+          // icon: `./assets/moe.png`
+          icon: $(music).attr('data-pic')
         }
         new window.Notification(msg.title, msg)
       }
@@ -280,6 +297,23 @@ $(() => {
         timeId = setInterval(() => {
           getID('pb1').style
             .width = (Music.currentTime / Music.duration * 100).toString() + "%"
+          // for (i in Lyric){
+          //   if (Music.currentTime == i) {
+          //     for (let b=0; b<$('.player-lyric')[0].player-lyric; b++){
+          //       let a = $('.player-lyric')[0]
+          //       a.children.forEach((item,index)=>{
+          //         let av = index + 1
+          //         $(item).removeClass('light')
+          //         if ($(item).attr('data-time') == i){
+          //           $(item).addClass('light')
+          //           $('.player-lyric').scrollTop($(item).outerHeight() * av)
+          //         }
+          //       })
+          //     }
+          //     $('.player-lyric li')
+          //   }
+          // }
+          // Music.currentTime
           if (Music.ended) {
             switch (mode) {
               case 'order':
@@ -384,8 +418,9 @@ $(() => {
   $('.playlist-detail').hide()
   let MusicInfo = () => {
     let tmpBg = Music.getAttribute('data-pic')
-    getID('last').style
-      .backgroundImage = `url(${tmpBg})`
+    $('.player-mask').css({
+      backgroundImage: `url(${tmpBg})`
+    })
     $('.player-cover-mask')[0].style
       .backgroundImage = `url(${tmpBg})`
     let sid = Music.getAttribute('data-share').substr((Music.getAttribute('data-share').indexOf('id=') + 3))
@@ -403,6 +438,7 @@ $(() => {
         return
       }
       a = parseLyric(e.body.lrc.lyric)
+      window.Lyric = a
       $('#player-lyric ul').html('')
       for (let i in a) {
         let li = $('<li>', {
@@ -533,7 +569,7 @@ $(() => {
             })
             $('.playlist-tags').html(`标签: ${imTag}`)
             $('.playlist-desc').text(`${e.body.playlist.description}`)
-            $('.playlist-detail').fadeIn('slow')
+            $('.playlist-detail').slideDown('slow')
             e.body.playlist.tracks.forEach((pp, index) => {
               let lii = ''
               pp.ar.forEach(il => {
@@ -665,27 +701,57 @@ $(() => {
   mouseDown.bind('2', e => {
     Music.currentTime += 5
   })
+  $('#search-limit').on('blur', e => {
+    window.localStorage.setItem('search_limit', $('#search-limit').val())
+  })
+  $('#user-logout').on('click', e => {
+    window.localStorage.removeItem('user')
+    window.localStorage.removeItem('ck')
+  })
+  $('#hot-status').on('blur', e => {
+    window.localStorage.setItem('hot', Boolean(parseInt($('#hot-status').val())))
+  })
+  $('#history-fask').on('blur', e => {
+    window.localStorage.setItem('history', Boolean(parseInt($('#history-fask').val())))
+  })
 })
 let SEARCH = () => {
   $('.search-wrap').toggleClass('show')
   $('#g_search').focus()
-  $('#search-hot').html('')
-  api.searchHot({}, api.end).then(e => {
-    e.body.result.hots.forEach(item => {
-      let tg = $('<a>', {
-        html: item.first,
+  $('#search-hot,#history').html('')
+  $('#search-hot,#history').hide()
+  if (JSON.parse(window.localStorage.getItem('hot'))){
+    $('#search-hot').show()
+    api.searchHot({}, api.end).then(e => {
+      e.body.result.hots.forEach(item => {
+        let tg = $('<a>', {
+          html: item.first,
+          href: 'javascript:void(0)'
+        })
+        tg.on('click', () => {
+          $('#g_search').val(tg.html())
+        })
+        $('#search-hot').append(tg)
+      })
+    })
+  }
+  if (JSON.parse(window.localStorage.getItem('history'))){
+    $('#history').show()
+    let h = JSON.parse(window.localStorage.getItem('history_list')) || []
+    h.forEach((item)=>{
+      let aa = $('<a>',{
+        html: item,
         href: 'javascript:void(0)'
       })
-      tg.on('click', () => {
-        $('#g_search').val(tg.html())
+      aa.on('click',e=>{
+        $('#g_search').val(aa.html())
+        return false
       })
-      $('#search-hot').append(tg)
+      $('#history').append(aa)
     })
-  })
-  if (!navigator.onLine) {
-    console.log('你似乎没有网络🤯');
   }
 }
+// 右键菜单
 const menu = document.getElementById('menu');
 let menuVisible = false;
 $(menu).hide()
@@ -704,6 +770,7 @@ const setPosition = ({
 };
 
 window.addEventListener("click", e => {
+  $('.gMenu').removeClass('show')
   if (menuVisible) toggleMenu("hide");
 });
 
@@ -722,9 +789,3 @@ window.addEventListener("contextmenu", e => {
   setPosition(origin);
   return false;
 });
-let mmm = new Audio()
-mmm.volume = 0.1
-$(window).on('click', e => {
-  mmm.src = './assets/jump.mp3'
-  mmm.play()
-})

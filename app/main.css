@@ -67,18 +67,12 @@ td, th {
   -webkit-box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.2);
 }
 
-@font-face {
-  font-family: monaco;
-  src: url('./assets/monaco.ttf');
-}
-
 /* end */
 html,
 body {
   width: 100%;
   height: 100%;
-  font-family: monaco, PingFang SC, Verdana, Helvetica Neue, Microsoft Yahei, Hiragino Sans GB, Microsoft Sans Serif, WenQuanYi Micro Hei, sans-serif;
-  font-size: 16px;
+  font: 14px/1.5 "Helvetica Neue", Helvetica, Arial, "Microsoft Yahei", "Hiragino Sans GB", "Heiti SC", "WenQuanYi Micro Hei", sans-serif;
   background-color: rgba(215, 215, 215, 0.7);
   user-select: none;
   overflow: hidden;
@@ -121,14 +115,13 @@ textarea {
   left: 0;
   width: 100%;
   height: 30px;
-  background: -webkit-linear-gradient(top, #ebebeb, #d5d5d5);
   z-index: 88;
 }
 
 .drag-wrap {
   position: relative;
   left: 10px;
-  width: 840px;
+  width: 780px;
   height: 30px;
   -webkit-app-region: drag;
   z-index: 888;
@@ -213,15 +206,13 @@ textarea {
 
 .menu-w {
   height: 100%;
-  padding-right: 10px;
+  padding-right: 14px;
 }
 
 #g_menu {
   position: relative;
-  top: 4px;
-  left: 4px;
-  width: 30px;
-  height: 30px;
+  top: 6px;
+  right: -4px;
   border: 0;
   padding: 0;
   background: none;
@@ -260,10 +251,15 @@ textarea {
   transform: translate(0);
 }
 
+#history:before {
+  content: "历史搜索: "
+}
+
 #search-hot:before {
   content: "热搜: "
 }
 
+#history,
 #search-hot {
   padding: 10px;
   margin: 0 5px;
@@ -273,6 +269,7 @@ textarea {
   color: rgba(0, 0, 0, .5);
 }
 
+#history a,
 #search-hot a {
   display: inline-block;
   padding: 0 4px;
@@ -694,14 +691,16 @@ textarea {
   filter: blur(60px);
   opacity: .5;
 }
-.player-tools{
+
+.player-tools {
   position: relative;
   padding-left: 60px;
   padding-bottom: 10px;
   opacity: 0;
   transition: all .1s;
 }
-.player-tools *{
+
+.player-tools * {
   background: transparent;
   border-radius: 4px;
   padding: 4px 8px;
@@ -709,22 +708,27 @@ textarea {
   outline: none;
   transition: all .3s;
 }
-#search-played{
+
+#search-played {
   width: 100px;
 }
-.player-tools:hover{
+
+.player-tools:hover {
   opacity: 1;
 }
-#btnCleanHistory:hover{
+
+#btnCleanHistory:hover {
   background: #333;
   color: #fff;
 }
-#search-played:focus{
+
+#search-played:focus {
   width: 720px;
   outline-color: #000;
   border-color: #000;
   color: #000;
 }
+
 #player ul {
   padding-left: 50px;
   padding-bottom: 40px;
@@ -755,6 +759,7 @@ textarea {
   background: rgba(0, 0, 0, .5);
   transition: all .3s;
 }
+
 #player ul li a {
   display: block;
   text-transform: capitalize;
@@ -762,7 +767,8 @@ textarea {
   overflow: hidden;
   text-overflow: ellipsis;
 }
-#player ul li a .list-del.fr{
+
+#player ul li a .list-del.fr {
   border: none;
   background: transparent;
   padding: 5px 15px;
@@ -772,21 +778,26 @@ textarea {
   opacity: 0;
   transition: opacity .1s;
 }
+
 #player ul li:hover:before {
   opacity: .8;
   width: 40px;
 }
+
 #player ul li:hover a {
   font-weight: bold;
 }
-#player ul li:hover .list-del.fr{
+
+#player ul li:hover .list-del.fr {
   cursor: pointer;
   opacity: 1;
 }
-#player ul li .list-del.fr:hover{
+
+#player ul li .list-del.fr:hover {
   background: #333;
   color: #fff;
 }
+
 .mode-wrap {
   position: fixed;
   top: 0;
@@ -894,87 +905,6 @@ textarea {
   height: 100%;
   background-color: #333;
   background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAIAAAADCAYAAAC56t6BAAAAFElEQVQYlWNgQAeMDAwMxgwMDAwAASMANT5aFJoAAAAASUVORK5CYII=');
-}
-
-:root {
-  --deg: 1;
-  --x: -50%;
-  --y: -50%;
-}
-
-#cover {
-  position: fixed;
-  top: -35px;
-  left: -240px;
-  width: 100%;
-  height: 100%;
-}
-
-#cover:before {
-  content: ""
-}
-
-#cover div {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(var(--x, -50%), var(--y, -50%)) rotate(0deg);
-  font-size: 20vmin;
-  width: 2em;
-  height: 2em;
-  border-radius: 20px;
-  background-color: rgba(0, 0, 0, 0.22);
-  mix-blend-mode: screen;
-  filter: hue-rotate(0deg);
-  animation: wobble calc(150ms * var(--t)) linear infinite;
-  transform-origin: -var(--y) -var(--x);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-#cover div:nth-child(1) {
-  --x: -53%;
-  --y: -53%;
-  --t: 37;
-}
-
-#cover div:nth-child(2) {
-  --x: -47%;
-  --y: -52%;
-  --t: 58;
-}
-
-#cover div:nth-child(3) {
-  --x: -45%;
-  --y: -50%;
-  --t: 46;
-}
-
-#cover div:nth-child(4) {
-  --x: -53%;
-  --y: -45%;
-  --t: 72;
-}
-
-#cover div:nth-child(5) {
-  --x: -55%;
-  --y: -45%;
-  --t: 62;
-}
-
-@keyframes wobble {
-  to {
-    filter: hue-rotate(360deg);
-    transform: translate(var(--x), var(--y)) rotate(360deg);
-  }
-}
-
-#cover #last {
-  background-size: cover;
-  z-index: 233;
-  border-radius: 0;
-  -webkit-filter: saturate(.8) contrast(1.2)
 }
 
 #player-cover-close {
@@ -1254,13 +1184,15 @@ textarea {
 #login-exit:hover {
   cursor: pointer;
 }
+
 .tag {
   padding-left: 20px;
   padding-top: 10px;
 }
 
 .tag a {
-  color: rgba(0, 0, 0, .5)
+  color: rgba(0, 0, 0, .5);
+  margin: 0 2px;
 }
 
 .playlist-detail {
@@ -1381,11 +1313,22 @@ textarea {
   transition: all .5s;
 }
 
+.player-mask {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  background-color: #333;
+  background-size: cover;
+  background-position: center;
+  filter: blur(40px);
+  z-index: -1;
+}
+
 #player-lyric {
   position: absolute;
-  top: 70px;
-  right: 40px;
-  width: 500px;
+  top: 90px;
+  right: 0;
+  width: 100%;
   height: 400px;
   padding: 10px;
   box-sizing: border-box;
@@ -1421,7 +1364,10 @@ textarea {
   color: #fff;
   cursor: pointer;
 }
-
+#player-lyric li.light{
+  font-size: 16px;
+  color: #fff;
+}
 .no-lyric {
   position: relative;
   top: 120px;
@@ -1449,21 +1395,86 @@ textarea {
 #g-user p.fl {
   padding-left: 10px;
 }
+
 .gSetting {
   position: fixed;
-  top: 160px;
-  left: 240px;
-  width: 400px;
-  padding: 20px;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 233333;
   background: #fff;
+}
+
+.gSetting #fork:hover {
+  cursor: pointer;
+}
+
+.setting-wrap {
+  padding: 100px;
+  padding-bottom: 120px;
+}
+
+.setting-wrap h4 {
+  position: relative;
+  font-weight: bold;
+  font-size: 20px;
+  padding: 0 0 5px;
+  opacity: .8;
+  margin-bottom: 14px;
+  text-indent: 2px;
+}
+
+.setting-wrap h4:before {
+  content: "";
+  position: absolute;
+  bottom: 4px;
+  left: 0;
+  width: 100%;
+  height: 12px;
+  background: rgb(57, 210, 160);
+  z-index: -1;
+}
+
+.setting-wrap p {
+  padding: 10px;
+  transition: all ease-in-out .2s;
+}
+
+.setting-wrap p:hover {
+  background: rgba(148, 148, 148, 0.1)
+}
+
+.setting-wrap input {
+  border: none;
+  padding: 8px 0;
+  border-bottom: 1px solid #333;
+  background: none;
+  outline: none;
+}
+
+.setting-wrap input:focus {
+  border-bottom: 1px solid rgb(57, 210, 160);
+}
+
+.setting-wrap strong {
+  margin-right: 8px;
+  display: inline-block;
+  width: 100px;
+  text-align: right;
 }
 
 .gSetting button {
   border: 2px solid #333;
-  padding: 4px 16px;
+  padding: 2px 8px;
   margin: 0 8px;
-  border-radius: 5px;
+  border-radius: 2px;
   outline: none;
+}
+
+.gSetting button:hover {
+  background: #333;
+  color: #fff;
 }
 
 .gSetting button:hover,
@@ -1473,10 +1484,10 @@ textarea {
 
 #gSetting-close {
   position: absolute;
-  top: 5px;
-  right: 10px;
-  width: 14px;
-  height: 14px;
+  top: 20px;
+  left: 20px;
+  width: 12px;
+  height: 12px;
   border-radius: 50%;
   background: rgba(0, 0, 0, .5)
 }
@@ -1489,7 +1500,7 @@ menu {
   margin: 0;
   padding: 4px 0 5px;
   background: rgba(230, 225, 225, .95);
-  box-shadow: 0 2px 5px 0 rgba(0,0,0,.16),0 2px 10px 0 rgba(0,0,0,.12);
+  box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
   border-radius: 7px;
   color: rgba(0, 0, 0, 0.75);
   font-size: 14px;
@@ -1594,33 +1605,48 @@ body.dark .player-cover-mask,
 body.dark .share {
   background-image: none !important;
 }
-body.dark .player-cover:before{
-  background: rgba(0,0,0,.8)
+
+body.dark .player-cover:before {
+  background: rgba(0, 0, 0, .8)
 }
-body.dark .playlist-detail {
+
+body.dark .playlist-detail,
+body.dark .gSetting {
   background: #000;
 }
 
-body.dark ._title p:last-child:before {
-  background: #a29e9e;
+body.dark ._title p:last-child:before,
+body.dark #gSetting-close {
+  background: #cdc9c9;
 }
 
 body.dark .mode-wrap div span svg {
   fill: #333;
 }
-body.dark menu{
+
+body.dark .setting-wrap input,
+body.dark .setting-wrap h4,
+body.dark .gSetting {
+  color: #fff;
+}
+
+body.dark menu {
   background: #000;
-  color: rgba(255,255,255,.7);
+  color: rgba(255, 255, 255, .7);
 }
-body.dark menu hr{
-  background: rgba(255,255,255,.2)
+
+body.dark menu hr {
+  background: rgba(255, 255, 255, .2)
 }
-body.dark menu:hover menuitem{
+
+body.dark menu:hover menuitem {
   cursor: pointer;
 }
-body.dark #cover div{
+
+body.dark #cover div {
   animation: none;
 }
-body.dark #last{
+
+body.dark #last {
   border-radius: 50%;
 }

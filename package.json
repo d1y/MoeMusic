@@ -8,7 +8,7 @@
     "dist-win": "electron-builder --win --x64",
     "dist-osx": "electron-builder -m --x64",
     "dist-linux": "electron-builder -l deb tar.xz",
-    "dist-all": "electron-builder -mwl",
+    "dist-all": "sudo rm -rf release && electron-builder -mwl",
     "server": "cd app && browser-sync --server --files '**' .",
     "api": "rm -rf app/API && git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git app/API && cd app/API && sudo cnpm install"
   },

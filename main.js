@@ -30,7 +30,7 @@ createWindow = () => {
     protocol: 'file:',
     slashes: true
   }))
-  // win.webContents.openDevTools()
+  win.webContents.openDevTools()
   win.webContents.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8');
   const shouldQuit = app.makeSingleInstance((commandLine, workingDir) => {
     if (win) {

@@ -10,7 +10,7 @@
     "dist-linux": "electron-builder -l deb tar.xz",
     "dist-all": "sudo rm -rf release && electron-builder -mwl",
     "server": "cd app && browser-sync --server --files '**' .",
-    "api": "rm -rf app/API && git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git app/API && cd app/API && sudo cnpm install"
+    "api": "rm -rf app/api && git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git app/api && cd app/api && sudo cnpm install"
   },
   "build": {
     "productName": "moemusic",
@@ -72,6 +72,7 @@
     "electron-builder": "^20.38.3"
   },
   "dependencies": {
-    "request": "2.88.0"
+    "pac-proxy-agent": "^3.0.0",
+    "request": "^2.88.0"
   }
 }

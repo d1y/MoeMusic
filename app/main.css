@@ -50,8 +50,8 @@ td, th {
 
 /* 滚动槽 */
 ::-webkit-scrollbar {
-  width: 6px;
-  height: 6px;
+  width: 4px;
+  height: 4px;
 }
 
 ::-webkit-scrollbar-track {
@@ -414,6 +414,11 @@ textarea {
   background-size: 100%;
   cursor: pointer;
   transition: all .3s;
+  box-shadow: 0 0 24px rgba(16, 24, 32, .2);
+}
+
+#musicCover:hover {
+  box-shadow: box-shadow: 0 0 24px rgba(16, 24, 32, .5);
 }
 
 ._title {
@@ -1364,10 +1369,12 @@ textarea {
   color: #fff;
   cursor: pointer;
 }
-#player-lyric li.light{
+
+#player-lyric li.light {
   font-size: 16px;
   color: #fff;
 }
+
 .no-lyric {
   position: relative;
   top: 120px;
@@ -1492,6 +1499,74 @@ textarea {
   background: rgba(0, 0, 0, .5)
 }
 
+.noizio {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: translateX(-80rem);
+  transition: all .4s;
+}
+.noizio.show{
+  transform: translateX(0);
+}
+.screen {
+  padding-top: 120px;
+  background: rgba(255,255,255,.5);
+}
+
+.screen ul.check-wrap {
+  width: 80%;
+  margin: 100px auto;
+  height: 140px;
+  overflow: hidden;
+  -webkit-mask-image: linear-gradient(to left, rgba(255, 255, 255, 0) 0, rgba(255, 255, 255, .6) 15%, rgba(255, 255, 255, 1) 25%, rgba(255, 255, 255, 1) 75%, rgba(255, 255, 255, .6) 85%, rgba(255, 255, 255, 0) 100%);
+}
+
+.screen li {
+  display: inline-block;
+  width: 120px;
+  height: 100px;
+  text-align: center;
+  transition: all .2s;
+}
+.screen li[data-sound]{
+  padding-top: 10px;
+}
+.screen li:hover{
+  cursor: pointer;
+  background: rgba(255,255,255,.2)
+}
+.screen .big-wrap{
+  position: relative;
+  background: none!important;
+  width: 1800px;
+  height: auto;
+}
+.screen li img {
+  width: 40px;
+  height: 40px;
+  max-width: 80%;
+}
+.screen p{
+  text-transform: capitalize;
+}
+.noizio-close{
+  position: fixed;
+  bottom: -10px;
+  right: 0;
+  width: 100px;
+  height: 100px;
+  transition: bottom .3s;
+}
+.noizio-close img{
+  max-width: 100%;
+}
+.noizio-close:hover{
+  bottom: 0;
+  cursor: pointer;
+}
 menu {
   display: block;
   position: fixed;
@@ -1503,7 +1578,7 @@ menu {
   box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
   border-radius: 7px;
   color: rgba(0, 0, 0, 0.75);
-  font-size: 14px;
+  font-size: 12px;
   line-height: 15px;
   z-index: 439999;
 }

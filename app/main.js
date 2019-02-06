@@ -36,6 +36,6 @@ document.onreadystatechange = () => {
     shell.openExternal(document.getElementById('music').getAttribute('src'))
   }
   document.getElementById('fork').onclick = () => {
-    shell.openExternal()
+    shell.openExternal('http://moe.kozo4.ooo')
   }
 };

@@ -103,7 +103,7 @@ $(() => {
     $('.login-wrap').addClass('show')
     $('.gMenu').removeClass('show')
   })
-  $('.gMenu,#g_menu').on('click',e=>{
+  $('.gMenu,#g_menu').on('click', e => {
     e.stopPropagation()
   })
   $('#search-close').on('click', () => {
@@ -132,13 +132,13 @@ $(() => {
   })
   let search = (va) => {
     let l = window.localStorage.getItem('search_limit') || 20,
-        h = JSON.parse(window.localStorage.getItem('history_list')) || []
-    if (h.length < 5){
-      h.splice(0,0,va)
-    }else if (h.length >= 5){
-      h.splice(0,1,va)
+      h = JSON.parse(window.localStorage.getItem('history_list')) || []
+    if (h.length < 5) {
+      h.splice(0, 0, va)
+    } else if (h.length >= 5) {
+      h.splice(0, 1, va)
     }
-    window.localStorage.setItem('history_list',JSON.stringify(h))
+    window.localStorage.setItem('history_list', JSON.stringify(h))
     api.search({
       keywords: va,
       limit: l
@@ -211,6 +211,12 @@ $(() => {
   let played = (arg) => {
       arg = arg || {}
       $('#bg,#musicCover,.bg-blur,#player-mask,.mask').css('backgroundImage', `url(${arg.pic})`)
+      setTimeout(()=>{
+        let color = Math.floor((gr.length-1)-Math.random()*(gr.length-1))
+        $('#pb1,#volumeBar,.noizio').css({
+          background: `linear-gradient(to right, ${gr[color]['colors'][0]}, ${gr[color]['colors'][1]})`
+        })
+      },3000)
       $('#musicPlayer').addClass('show')
       $('#music').attr({
         'src': arg.url,
@@ -428,13 +434,22 @@ $(() => {
       id: sid
     }, api.end).then(e => {
       if (e.body.nolyric || e.body.uncollected) {
-        console.log('没有找到歌词🍭');
+        // console.log('没有找到歌词 🍭');
         $('#player-lyric ul').html('')
-        let a = $('<a>', {
-          class: 'no-lyric',
-          html: '没有找到歌词👀,可能是纯音乐 🚥 ~'
-        })
-        $('#player-lyric .player-lyric').append(a)
+        fetch('https://v1.hitokoto.cn')
+          .then(r => {
+            return r.json()
+          })
+          .then(data => {
+            let a = $('<a>', {
+              class: 'no-lyric',
+              html: data.hitokoto
+            })
+            $('#player-lyric .player-lyric').append(a)
+          })
+          .catch(err=>{
+            $('#player-lyric .player-lyric').append('<a>没有找到歌词 🍭</a>')
+          })
         return
       }
       a = parseLyric(e.body.lrc.lyric)
@@ -714,13 +729,23 @@ $(() => {
   $('#history-fask').on('blur', e => {
     window.localStorage.setItem('history', Boolean(parseInt($('#history-fask').val())))
   })
+  // $('#user-refresh').on('click',e =>{
+  //   if (window.localStorage.getItem('ck')){
+  //     console.log(JSON.parse(window.localStorage.getItem('ck')));
+  //     api.loginRefresh({
+  //       // cookie: JSON.parse(window.localStorage.getItem('ck'))
+  //     },api.end).then(data=>{
+  //       console.log(data);
+  //     })
+  //   }
+  // })
 })
 let SEARCH = () => {
   $('.search-wrap').toggleClass('show')
   $('#g_search').focus()
   $('#search-hot,#history').html('')
   $('#search-hot,#history').hide()
-  if (JSON.parse(window.localStorage.getItem('hot'))){
+  if (JSON.parse(window.localStorage.getItem('hot'))) {
     $('#search-hot').show()
     api.searchHot({}, api.end).then(e => {
       e.body.result.hots.forEach(item => {
@@ -735,15 +760,15 @@ let SEARCH = () => {
       })
     })
   }
-  if (JSON.parse(window.localStorage.getItem('history'))){
+  if (JSON.parse(window.localStorage.getItem('history'))) {
     $('#history').show()
     let h = JSON.parse(window.localStorage.getItem('history_list')) || []
-    h.forEach((item)=>{
-      let aa = $('<a>',{
+    h.forEach((item) => {
+      let aa = $('<a>', {
         html: item,
         href: 'javascript:void(0)'
       })
-      aa.on('click',e=>{
+      aa.on('click', e => {
         $('#g_search').val(aa.html())
         return false
       })
@@ -789,3 +814,72 @@ window.addEventListener("contextmenu", e => {
   setPosition(origin);
   return false;
 });
+
+fetch('https://github.com/ghosh/uiGradients/raw/master/gradients.json')
+  .then(r => r.json())
+  .then(data => {
+    window.gr = data
+  })
+
+{
+  fetch('./assets/noizio.json')
+    .then(r => r.json())
+    .then(data => {
+      data.forEach((item)=>{
+        let li = $('<li>',{
+          'data-sound': item.sound,
+          html: `<img src="${item.img}"> <p>${item.title}</p>`
+        })
+        let ad = new Audio()
+        ad.volume = 0.4
+        ad.preload = 'none'
+        ad.src = li.attr('data-sound')
+        ad.loop = 'loop'
+        li.append(ad)
+        li.on('click',e=>{
+          let dev = li.find('audio')[0]
+          if (dev.paused){
+            dev.play()
+          }else {
+            dev.pause()
+          }
+        })
+        $(".screen-wrap").append(li)
+      })
+    })
+  $('.noizio-close').on('click',e=>{
+    $('.noizio').removeClass('show')
+    $('#musicPlayer').addClass('show')
+  })
+}
+
+{
+  $('.noizio')[0].onmousewheel = e =>{
+    let lf = Math.abs(parseInt($('.big-wrap').css('left')))
+    if (e.wheelDelta == -120){
+      if (lf >= 1000) return
+      if (lf == 720) {
+        $('.big-wrap').css({
+          left: `-1000px`
+        })
+      }else {
+        $('.big-wrap').css({
+          left: `-${lf+=720}px`
+        })
+      }
+    }
+    else if (e.wheelDelta == 120){
+      if (lf <= 0) return
+      $('.big-wrap').css({
+        left: `0px`
+      })
+    }
+  }
+}
+
+{
+  $('#noizio').on('click',e=>{
+    $('.noizio').addClass('show')
+    $('.gMenu,#musicPlayer').removeClass('show')
+  })
+}

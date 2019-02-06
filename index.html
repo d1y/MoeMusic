@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Moemusic</title>
+  <link rel="icon" href="http://kozo4.ooo/favicon.ico">
+  <style media="screen">
+    img{
+      max-width: 80%;
+    }
+  </style>
+</head>
+
+<body>
+  <div style="width: 800px;margin: 40px auto 0;background: rgba(0,0,0,.1);padding: 50px;">
+  <a href="https://github.com/d1y/moemusic" style="position: fixed; top: 0; border: 0; right: 0;">
+    <svg width="80" height="80" viewBox="0 0 250 250" style="fill:#14ddda; color:#fff;" aria-hidden="true">
+      <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+      <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;"
+        class="octo-arm"></path>
+      <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+        fill="currentColor" class="octo-body"></path>
+    </svg>
+  </a>
+  <p align="center">
+    <img width="20%" src="https://files.catbox.moe/my1mh6.png">
+  </p>
+
+  <p align="center">
+    <img src="https://img.shields.io/badge/Bilibili-Kozo4-blue.svg">
+    <img src="https://img.shields.io/badge/Release-0.0.1beta-brightgreen.svg">
+    <img src="https://img.shields.io/badge/codingMood-🍭🍭🍭-brightgreen.svg">
+  </p>
+
+  <h2 align="center">MoeMusic</h2>
+
+  <p><a href="index_cn.html">👉中文看这里👈</a> <code style="font-family: Monaco;">MoeMusic</code> is a music player based on <code style="font-family: Monaco;">electorn</code>🎸 (<code style="font-family: Monaco;">mm</code> for short)🎧, but its
+    connotation is far more than a music player👋 . I hope it can replace your girlfriend's API service❤️. Netease CloudMusic Api is based on: <a href="https://github.com/Binaryify/NeteaseCloudMusicApi">Binaryify / Netease CloudMusic</a>. Thank you
+    for helping me.</p>
+  <p align="center">
+
+    <img src="https://i.loli.net/2019/01/20/5c4496d7ae265.png">
+  </p>
+
+  <h2 id="screenshot-">screenshot👇🏻</h2>
+  <blockquote>
+    <p>GIF is too big!</p>
+  </blockquote>
+  <h3 id="player">player</h3>
+  <p><img alt="" src="https://i.loli.net/2019/02/06/5c5aba941158a.gif"></p>
+  <h3 id="search">search</h3>
+  <p><img alt="" src="https://i.loli.net/2019/02/06/5c5abaa789777.gif"></p>
+  <h3 id="theme-contentmenu">theme &amp; contentmenu</h3>
+  <p><img alt="" src="https://i.loli.net/2019/02/06/5c5abab58eb2e.gif"></p>
+  <h2 id="build">build</h2>
+  <p>Selector is all right, but it's too big. You can compile it yourself. I assume you have a simple <code style="font-family: Monaco;">command line</code> + <code style="font-family: Monaco;">nodejs</code> + <code style="font-family: Monaco;">git</code>
+    base.</p>
+  <pre class="editor-colors lang-bash"><div class="line"><span class="syntax--source syntax--shell"><span class="leading-whitespace">  </span>git clone https://github.com/d1y/moemusic</span></div><div class="line"><span class="syntax--source syntax--shell"><span class="leading-whitespace">  </span><span class="syntax--support syntax--function syntax--builtin syntax--shell">cd</span> moemusic <span class="syntax--keyword syntax--operator syntax--list syntax--shell">&amp;&amp;</span> yarn</span></div><div class="line"><span class="syntax--source syntax--shell"><span class="syntax--punctuation syntax--whitespace syntax--comment syntax--leading syntax--shell"><span class="leading-whitespace">  </span></span><span class="syntax--comment syntax--line syntax--number-sign syntax--shell"><span class="syntax--punctuation syntax--definition syntax--comment syntax--shell">#</span> api</span></span></div><div class="line"><span class="syntax--source syntax--shell"><span class="leading-whitespace">  </span>yarn run api</span></div><div class="line"><span class="syntax--source syntax--shell"><span class="syntax--punctuation syntax--whitespace syntax--comment syntax--leading syntax--shell"><span class="leading-whitespace">  </span></span><span class="syntax--comment syntax--line syntax--number-sign syntax--shell"><span class="syntax--punctuation syntax--definition syntax--comment syntax--shell">#</span> build all</span></span></div><div class="line"><span class="syntax--source syntax--shell"><span class="leading-whitespace">  </span>yarn run dist-all</span></div><div class="line"><span class="syntax--source syntax--shell"><span class="syntax--punctuation syntax--whitespace syntax--comment syntax--leading syntax--shell"><span class="leading-whitespace">  </span></span><span class="syntax--comment syntax--line syntax--number-sign syntax--shell"><span class="syntax--punctuation syntax--definition syntax--comment syntax--shell">#</span> win</span></span></div><div class="line"><span class="syntax--source syntax--shell"><span class="leading-whitespace">  </span>yarn run dist-win</span></div><div class="line"><span class="syntax--source syntax--shell"><span class="syntax--punctuation syntax--whitespace syntax--comment syntax--leading syntax--shell"><span class="leading-whitespace">  </span></span><span class="syntax--comment syntax--line syntax--number-sign syntax--shell"><span class="syntax--punctuation syntax--definition syntax--comment syntax--shell">#</span> mac</span></span></div><div class="line"><span class="syntax--source syntax--shell"><span class="leading-whitespace">  </span>yarn run dist-mac</span></div><div class="line"><span class="syntax--source syntax--shell"><span class="syntax--punctuation syntax--whitespace syntax--comment syntax--leading syntax--shell"><span class="leading-whitespace">  </span></span><span class="syntax--comment syntax--line syntax--number-sign syntax--shell"><span class="syntax--punctuation syntax--definition syntax--comment syntax--shell">#</span> linux</span></span></div><div class="line"><span class="syntax--source syntax--shell"><span class="leading-whitespace">  </span>yarn run dist-linux</span></div></pre>
+  <p><strong>PS: I strongly recommend that you install electron and use my source code directly..</strong></p>
+  <pre class="editor-colors lang-bash"><div class="line"><span class="syntax--source syntax--shell"><span class="syntax--punctuation syntax--whitespace syntax--comment syntax--leading syntax--shell"><span class="leading-whitespace">  </span></span><span class="syntax--comment syntax--line syntax--number-sign syntax--shell"><span class="syntax--punctuation syntax--definition syntax--comment syntax--shell">#</span> install electron</span></span></div><div class="line"><span class="syntax--source syntax--shell"><span class="leading-whitespace">  </span>yarn global add electron</span></div><div class="line"><span class="syntax--source syntax--shell"><span class="leading-whitespace">  </span>npm i -g electorn</span></div><div class="line"><span class="syntax--source syntax--shell"><span class="syntax--punctuation syntax--whitespace syntax--comment syntax--leading syntax--shell"><span class="leading-whitespace">  </span></span><span class="syntax--comment syntax--line syntax--number-sign syntax--shell"><span class="syntax--punctuation syntax--definition syntax--comment syntax--shell">#</span> add alias</span></span></div><div class="line"><span class="syntax--source syntax--shell"><span class="leading-whitespace">  </span><span class="syntax--support syntax--function syntax--builtin syntax--shell">echo</span> <span class="syntax--string syntax--quoted syntax--double syntax--shell"><span class="syntax--punctuation syntax--definition syntax--string syntax--begin syntax--shell">"</span>alias mm='electorn path'<span class="syntax--punctuation syntax--definition syntax--string syntax--end syntax--shell">"</span></span> <span class="syntax--keyword syntax--operator syntax--redirect syntax--shell">&gt;&gt;</span> <span class="syntax--keyword syntax--operator syntax--tilde syntax--shell">~</span>/.zshrc <span class="syntax--comment syntax--line syntax--number-sign syntax--shell"><span class="syntax--punctuation syntax--definition syntax--comment syntax--shell">#</span> path = clone好的目录</span></span></div><div class="line"><span class="syntax--source syntax--shell"><span class="syntax--punctuation syntax--whitespace syntax--comment syntax--leading syntax--shell"><span class="leading-whitespace">  </span></span><span class="syntax--comment syntax--line syntax--number-sign syntax--shell"><span class="syntax--punctuation syntax--definition syntax--comment syntax--shell">#</span> use</span></span></div><div class="line"><span class="syntax--source syntax--shell"><span class="leading-whitespace">  </span>mm</span></div></pre>
+  <h2 id="-">使用</h2>
+  <h3 id="shortcut-keys">Shortcut keys</h3>
+  <p>Mm has vim-like shortcuts keys</p>
+  <table>
+    <thead>
+      <tr>
+        <th style="text-align:left">key</th>
+        <th style="text-align:left">function</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">ctrl+m</code> &amp; <code style="font-family: Monaco;">⌘+m</code></td>
+        <td style="text-align:left">menu</td>
+      </tr>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">ctrl+a</code> &amp; <code style="font-family: Monaco;">⌘+a</code></td>
+        <td style="text-align:left">playlist</td>
+      </tr>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">ctrl+p</code> &amp; <code style="font-family: Monaco;">⌘+p</code></td>
+        <td style="text-align:left">player</td>
+      </tr>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">ctrl+f</code></td>
+        <td style="text-align:left">search</td>
+      </tr>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">space</code></td>
+        <td style="text-align:left">play &amp; pause</td>
+      </tr>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">ctrl+1</code> &amp; <code style="font-family: Monaco;">←</code></td>
+        <td style="text-align:left">prev songs</td>
+      </tr>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">ctrl+2</code> &amp; <code style="font-family: Monaco;">→</code></td>
+        <td style="text-align:left">next songs</td>
+      </tr>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">ctrl+3</code> &amp;<code style="font-family: Monaco;">↑</code></td>
+        <td style="text-align:left">volume+</td>
+      </tr>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">ctrl+4</code> &amp;<code style="font-family: Monaco;">↓</code></td>
+        <td style="text-align:left">volume-</td>
+      </tr>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">ctrl+tab</code></td>
+        <td style="text-align:left">music mode check</td>
+      </tr>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">1</code></td>
+        <td style="text-align:left">Music time-5s</td>
+      </tr>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">2</code></td>
+        <td style="text-align:left">Music time+5s</td>
+      </tr>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">esc</code></td>
+        <td style="text-align:left">Exit all secondary menus</td>
+      </tr>
+      <tr>
+        <td style="text-align:left"><code style="font-family: Monaco;">w o y a o m e i z i</code></td>
+        <td style="text-align:left">bug2333</td>
+      </tr>
+    </tbody>
+  </table>
+  <p>It is worth mentioning that although mm wants to be your girlfriend, she will not abuse the global shortcuts excessively, so all the above shortcuts will only take effect when the window gets the focus.</p>
+  <h3 id="function">function</h3>
+  <p>I know you're still eager to try.
+    <code style="font-family: Monaco;">mm</code> Current support:</p>
+  <h4 id="white-noise">White noise</h4>
+  <p><code style="font-family: Monaco;">woootf</code>,It's necessary.</p>
+  <p>Originality and ideas come from noizio on the same Mac platform</p>
+  <blockquote>
+    <p>Noizio functions are simple, but there are many sound types. Although these sounds are not translated in Chinese, these words are relatively simple, and there are corresponding icons for easy identification. In fact, it won't waste much time
+      to listen to each one once. In short, it's easy to understand what kind of environment these sounds are.
+      You can turn on only one sound, or you can simulate different environments by combining different sounds, such as turning on summer night + waves + fires, to simulate sitting on the beach and enjoying the night sky. It is often used to listen
+      during the lunch break. Sleep quality improves obviously. Of course, you can also open the combination of cafe and deep space, and imagine sitting in a space cafe, watching the stars while tasting coffee.</p>
+  </blockquote>
+  <h2 id="about">about</h2>
+  <blockquote>
+    <p>自豪的使用: 百度翻译</p>
+  </blockquote>
+  <p align="center">
+    <img src="https://i.loli.net/2019/01/15/5c3dd5904907a.png">
+  </p>
+
+  <h2 id="todo">TODO</h2>
+  <ul>
+    <li><label>
+        <input class="task-list-item-checkbox" type="checkbox">
+        模型妹子一定要有(女朋友啊!!)
+      </label></li>
+    <li><label>
+        <input checked="" class="task-list-item-checkbox" type="checkbox">
+        白噪音功能(可以深度学习)
+      </label></li>
+    <li><label>
+        <input class="task-list-item-checkbox" type="checkbox">
+        更完善的搜索功能
+      </label></li>
+    <li><label>
+        <input class="task-list-item-checkbox" type="checkbox">
+        多接口(<code style="font-family: Monaco;">QQ</code>+<code style="font-family: Monaco;">酷狗</code>+<code style="font-family: Monaco;">..</code>)
+      </label></li>
+    <li><label>
+        <input checked="" class="task-list-item-checkbox" type="checkbox">
+        用户可自定义的设置(比如，默认下载的音质)
+      </label></li>
+    <li><label>
+        <input class="task-list-item-checkbox" type="checkbox">
+        一定要有调音器,这必须的,这个<code style="font-family: Monaco;">app</code>面向是电子音乐用户
+      </label></li>
+    <li><label>
+        <input class="task-list-item-checkbox" type="checkbox">
+        手机端
+      </label></li>
+    <li><label>
+        <input checked="" class="task-list-item-checkbox" type="checkbox">
+        登录功能(<code style="font-family: Monaco;">20%</code>)
+      </label></li>
+    <li><label>
+        <input checked="" class="task-list-item-checkbox" type="checkbox">
+        一定要有炫酷的播放特效(比如<code style="font-family: Monaco;">音波</code>)
+      </label></li>
+    <li><label>
+        <input checked="" class="task-list-item-checkbox" type="checkbox">
+        多主题,切换主题
+      </label></li>
+    <li><label>
+        <input checked="" class="task-list-item-checkbox" type="checkbox">
+        歌曲推荐
+      </label></li>
+  </ul>
+</div>
+</body>
+
+</html>

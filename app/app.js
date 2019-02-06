@@ -716,6 +716,12 @@ $(() => {
   mouseDown.bind('2', e => {
     Music.currentTime += 5
   })
+  mouseDown.bind('w o y a o m e i z i', e=>{
+    $('.woyaomeizi').addClass('show')
+  })
+  mouseDown.bind('w o s h i f e i z h a i', e=>{
+    $('.woyaomeizi').removeClass('show')
+  })
   $('#search-limit').on('blur', e => {
     window.localStorage.setItem('search_limit', $('#search-limit').val())
   })

@@ -1499,7 +1499,6 @@ textarea {
   background: rgba(0, 0, 0, .5)
 }
 
-.woyaomeizi,
 .noizio {
   position: fixed;
   top: 0;
@@ -1509,35 +1508,12 @@ textarea {
   transform: translateX(-80rem);
   transition: all .4s;
 }
-
-.woyaomeizi {
-  z-index: 9999999;
-  background: green;
-}
-
-.woyaomeizi .woyaomeizi-info {
-  width: 80%;
-  margin: 0 auto;
-  color: #fff;
-  font-size: 16px;
-  line-height: 2;
-}
-
-.woyaomeizi .woyaomeizi-info img {
-  max-width: 80%;
-  background: #fff;
-  border-bottom-right-radius: 4em;
-  border-bottom-left-radius: 4em;
-}
-
-.woyaomeizi.show,
-.noizio.show {
+.noizio.show{
   transform: translateX(0);
 }
-
 .screen {
   padding-top: 120px;
-  background: rgba(255, 255, 255, .5);
+  background: rgba(255,255,255,.5);
 }
 
 .screen ul.check-wrap {
@@ -1555,34 +1531,28 @@ textarea {
   text-align: center;
   transition: all .2s;
 }
-
-.screen li[data-sound] {
+.screen li[data-sound]{
   padding-top: 10px;
 }
-
-.screen li:hover {
+.screen li:hover{
   cursor: pointer;
-  background: rgba(255, 255, 255, .2)
+  background: rgba(255,255,255,.2)
 }
-
-.screen .big-wrap {
+.screen .big-wrap{
   position: relative;
-  background: none !important;
+  background: none!important;
   width: 1800px;
   height: auto;
 }
-
 .screen li img {
   width: 40px;
   height: 40px;
   max-width: 80%;
 }
-
-.screen p {
+.screen p{
   text-transform: capitalize;
 }
-
-.noizio-close {
+.noizio-close{
   position: fixed;
   bottom: -10px;
   right: 0;
@@ -1590,16 +1560,13 @@ textarea {
   height: 100px;
   transition: bottom .3s;
 }
-
-.noizio-close img {
+.noizio-close img{
   max-width: 100%;
 }
-
-.noizio-close:hover {
+.noizio-close:hover{
   bottom: 0;
   cursor: pointer;
 }
-
 menu {
   display: block;
   position: fixed;

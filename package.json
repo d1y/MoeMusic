@@ -1,6 +1,6 @@
 {
   "name": "Moemusic",
-  "version": "0.0.1-beta",
+  "version": "20190206",
   "description": "a moe music",
   "main": "main.js",
   "scripts": {
@@ -10,7 +10,9 @@
     "dist-linux": "electron-builder -l deb tar.xz",
     "dist-all": "sudo rm -rf release && electron-builder -mwl",
     "server": "cd app && browser-sync --server --files '**' .",
-    "api": "rm -rf app/api && git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git app/api && cd app/api && sudo cnpm install"
+    "api": "rm -rf app/api && git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git app/api && cd app/api && sudo cnpm install",
+    "md": "pen .",
+    "gh": "git subtree push --prefix=page origin gh-pages"
   },
   "build": {
     "productName": "moemusic",

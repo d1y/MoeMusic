@@ -234,7 +234,32 @@ textarea {
   margin-bottom: 12px;
   text-align: center;
 }
-
+/* animate check */
+/* .animate-fixed{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(255, 255, 255, .9);
+  transition: all .3s;
+  z-index: 23587;
+}
+.animate-left{
+  transform: translateX(-100rem);
+}
+.animate-right{
+  transform: translateX(100rem);
+}
+.animate-top{
+  transform: translateY(100rem);
+}
+.animate-bottom{
+  transform: translateY(-100rem);
+}
+.animate-fixed.show{
+  transform: none;
+} */
 .search-wrap {
   position: fixed;
   top: 0;
@@ -701,7 +726,6 @@ textarea {
   position: relative;
   padding-left: 60px;
   padding-bottom: 10px;
-  opacity: 0;
   transition: all .1s;
 }
 
@@ -728,7 +752,7 @@ textarea {
 }
 
 #search-played:focus {
-  width: 720px;
+  width: 600px;
   outline-color: #000;
   border-color: #000;
   color: #000;
@@ -757,11 +781,11 @@ textarea {
 #player ul li:before {
   content: "";
   position: absolute;
-  top: 45%;
+  top: 40%;
   left: -40px;
   width: 0;
-  height: 4px;
-  background: rgba(0, 0, 0, .5);
+  height: 2px;
+  background: #19a2ac;
   transition: all .3s;
 }
 
@@ -790,7 +814,7 @@ textarea {
 }
 
 #player ul li:hover a {
-  font-weight: bold;
+  color: #19a2ac;
 }
 
 #player ul li:hover .list-del.fr {
@@ -873,14 +897,14 @@ textarea {
   position: fixed;
   bottom: 0;
   left: 0;
-  width: 0;
-  height: 0;
+  width: 100%;
+  height: 100%;
   background: rgba(0, 0, 0, .8);
   background-size: cover;
-  transform: scale(0);
+  transform: translateY(100rem);
   z-index: -10;
   opacity: 0;
-  transition: all .5s;
+  transition: all ease .5s;
 }
 
 .player-cover-mask {
@@ -894,9 +918,7 @@ textarea {
 }
 
 .player-cover.show {
-  width: 100%;
-  height: 100%;
-  transform: none;
+  transform: translateY(0);
   opacity: 1;
   z-index: 99;
 }
@@ -1498,6 +1520,7 @@ textarea {
   border-radius: 50%;
   background: rgba(0, 0, 0, .5)
 }
+
 .woyaomeizi,
 .noizio {
   position: fixed;
@@ -1508,12 +1531,13 @@ textarea {
   transform: translateX(-80rem);
   transition: all .4s;
 }
+
 .woyaomeizi {
   z-index: 9999999;
   background: green;
 }
 
- .woyaomeizi .woyaomeizi-info {
+.woyaomeizi .woyaomeizi-info {
   width: 80%;
   margin: 0 auto;
   color: #fff;
@@ -1521,7 +1545,7 @@ textarea {
   line-height: 2;
 }
 
- .woyaomeizi .woyaomeizi-info img {
+.woyaomeizi .woyaomeizi-info img {
   max-width: 80%;
   background: #fff;
   border-bottom-right-radius: 4em;
@@ -1529,12 +1553,13 @@ textarea {
 }
 
 .woyaomeizi.show,
-.noizio.show{
+.noizio.show {
   transform: translateX(0);
 }
+
 .screen {
   padding-top: 120px;
-  background: rgba(255,255,255,.5);
+  background: rgba(255, 255, 255, .5);
 }
 
 .screen ul.check-wrap {
@@ -1552,28 +1577,34 @@ textarea {
   text-align: center;
   transition: all .2s;
 }
-.screen li[data-sound]{
+
+.screen li[data-sound] {
   padding-top: 10px;
 }
-.screen li:hover{
+
+.screen li:hover {
   cursor: pointer;
-  background: rgba(255,255,255,.2)
+  background: rgba(255, 255, 255, .2)
 }
-.screen .big-wrap{
+
+.screen .big-wrap {
   position: relative;
-  background: none!important;
+  background: none !important;
   width: 1800px;
   height: auto;
 }
+
 .screen li img {
   width: 40px;
   height: 40px;
   max-width: 80%;
 }
-.screen p{
+
+.screen p {
   text-transform: capitalize;
 }
-.noizio-close{
+
+.noizio-close {
   position: fixed;
   bottom: -10px;
   right: 0;
@@ -1581,15 +1612,18 @@ textarea {
   height: 100px;
   transition: bottom .3s;
 }
-.noizio-close img{
+
+.noizio-close img {
   max-width: 100%;
 }
-.noizio-close:hover{
+
+.noizio-close:hover {
   bottom: 0;
   cursor: pointer;
 }
+
 menu {
-  display: block;
+  display: none;
   position: fixed;
   top: 50px;
   left: 50px;
@@ -1643,6 +1677,123 @@ menu menuitem:hover::after {
   color: #fff;
 }
 
+#loading {
+  position: fixed;
+  z-index: 99999999;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  color: #11636d;
+  background: rgba(232, 238, 235, .8);
+}
+#loading div {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 200px;
+  height: 200px;
+  margin: auto;
+  text-align: center;
+}
+
+.localMusic {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: #fff;
+  z-index: 23;
+  background: url("https://i.loli.net/2019/02/10/5c5ffdc86a1c0.png")
+}
+
+.scan-files {
+  position: fixed;
+  top: 250px;
+  left: 10px;
+  width: 80px;
+  transform: rotate(90deg);
+  height: 20px;
+}
+
+.scan-files button {
+  width: 80px;
+  height: 20px;
+  background: rgba(0, 0, 0, .5);
+  color: #fff;
+  border: 1px solid #d7a32d;
+  background: #fbbe3f;
+  outline: none;
+  transition: all .2s;
+}
+
+.scan-files:hover button {
+  cursor: pointer;
+  box-shadow: 0 0 24px rgba(16, 24, 32, .2);
+}
+
+.localmusic-tip {
+  position: absolute;
+  top: 260px;
+  left: 300px;
+  color: #1740bf;
+  text-align: center;
+}
+#local-list{
+  height: 460px;
+  position: absolute;
+  left: 90px;
+  top: 80px;
+  width: 700px;
+  background: rgba(0, 0, 0, .2);
+  transform: translateX(-100rem);
+  overflow: auto;
+  transition: all .3s;
+}
+#local-list.show{
+  transform: translateX(0);
+}
+#local-list li a{
+  display: block;
+  margin: 15px 0;
+  text-transform: capitalize;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  text-indent: 2em;
+  color: #fff;
+  text-decoration: none;
+}
+#local-list li a:hover{
+  text-decoration: underline;
+}
+.local-tools{
+  position: fixed;
+  top: 30px;
+  left: 0;
+  width: 100%;
+  text-align: center;
+  color: #fff;
+}
+.local-tools input{
+  width: 80px;
+  height: 30px;
+  border: 1px solid #fff;
+  color: #fff!important;
+  background: none;
+  text-align: center;
+  outline: none;
+  transition: all .3s;
+}
+.local-tools input::placeholder{
+  color: #fff;
+}
+.local-tools input:focus{
+  width: 600px;
+}
 body.dark {
   transition: all .5s;
 }

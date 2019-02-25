@@ -4,14 +4,20 @@
 <head>
   <meta charset="UTF-8">
   <title>Moemusic</title>
-  <link rel="stylesheet" href="main.css">
-  <link rel="stylesheet" href="https://live2d.fghrsh.net/assets/1.4.2/waifu.min.css">
+  <link rel="stylesheet/less" type="text/css" href="style/main.less" />
+  <!-- <link rel="stylesheet" href="main.css"> -->
 </head>
 
 <body>
-  <div id="app">
-    <div id="bg"></div>
-    <div id="topbar" class="clearfix">
+  <div id="loading" class="fixed">
+    <div>
+      <img src="https://i.loli.net/2018/09/20/5ba3a331a8f3e.gif" alt="">
+      <p>骚等,<strong>MM</strong>正在换装中.</p>
+    </div>
+  </div>
+  <div id="app" class="wh100">
+    <div class="player-mask"></div>
+    <div id="topbar" class="clearfix fixed">
       <div class="fl">
         <div class="ctrl">
           <span id="window-closed"></span>
@@ -29,7 +35,7 @@
     </div>
     <div class="app-content">
       <div class="playhot">
-        <div class="playlist-detail">
+        <div class="fixed playlist-detail animate-bottom">
           <div class="playlist-header">
             <div id="playlist-header-mask"></div>
             <div class="playlist-wrap clearfix">
@@ -68,7 +74,7 @@
           </li>
         </ul>
       </div>
-      <div class="search-wrap">
+      <div class="search-wrap fixed animate-bottom">
         <div class="player-mask" style="opacity: .5"></div>
         <div id="search-close"></div>
         <div class="tool_bar">
@@ -80,7 +86,7 @@
         </div>
         <div id="result"></div>
       </div>
-      <div class="login-wrap">
+      <div class="login-wrap fixed animate-top">
         <div class="login-con">
           <img class="login-img" src="./assets/login.png" alt="">
           <input type="text" placeholder="🤟 账号" class="login-user">
@@ -97,7 +103,7 @@
         </div>
       </div>
     </div>
-    <div id="musicPlayer" class="clearfix">
+    <div id="musicPlayer" class="clearfix fixed animate-bottom">
       <div class="player-mask"></div>
       <div class="progress-bar">
         <div id="progress-bar">
@@ -176,25 +182,25 @@
         </div>
       </div>
     </div>
-    <div id="share">
-      <div>
-        <p class="qrcodeWrap">
+    <div id="share" class="fixed animate-left">
+      <div class="fixed-center">
+        <p class="qrcodeWrap text-overflow">
           <img src="https://qrickit.com/api/qr.php?d=https://music.163.com" alt="" class="qrcode">
         </p>
         <p class="share-name"></p>
         <p class="share-by"></p>
       </div>
     </div>
-    <div id="player">
-      <div class="mask"></div>
+    <div id="player" class="fixed animate-right">
+      <div class="player-mask" style="opacity: .5"></div>
       <p class="player-tools">
         <button type="button" name="button" id="btnCleanHistory">清空播放列表</button>
         <input type="text" id="search-played" placeholder="检索">
       </p>
       <ul></ul>
     </div>
-    <div class="mode-wrap">
-      <div>
+    <div class="mode-wrap fixed animate-top">
+      <div class="fixed-center">
         <span title="单曲循环" id="mode-loop">
           <svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24" height="24" viewBox="0 0 50 50" version="1.1">
             <g id="surface1">
@@ -215,15 +221,27 @@
         </span>
       </div>
     </div>
+    <div class="localMusic fixed animate-left">
+      <div id="localMusic-close"></div>
+      <p class="scan-files">
+        <button>Scan</button>
+      </p>
+      <div class="localmusic-tip">
+        <p class="localmusic-text">请双击左边按钮加载本地音乐(｡･∀･)ﾉﾞ</p>
+      </div>
+      <p class="local-tools">
+        <input type="text"  placeholder="检索">
+      </p>
+      <ul id="local-list"></ul>
+    </div>
   </div>
-  <div class="player-cover">
+  <div class="player-cover fixed animate-top">
     <div class="player-cover-mask"></div>
-    <div id="player-cover-close"></div>
     <div id="player-lyric">
       <ul class="player-lyric"></ul>
     </div>
   </div>
-  <div class="gMenu">
+  <div class="fixed animate-left gMenu">
     <div id="g-user">
       <div class="clearfix">
         <img src="https://p1.music.126.net/WD2odNosfiGFCJv27TfG4g==/109951163620074844.jpg" alt="" class="fl">
@@ -239,30 +257,20 @@
       <!-- <li><a href="#" id="btnRecommend">❤️ 每日推荐</a></li> -->
       <!-- <li><a href="#" id="myPlaylist">🍭 我的歌单</a></li> -->
       <li><a href="#" id="noizio">🍓 Noizio</a></li>
-      <li><a href="#" id="fm">😄 FM</a></li>
-      <li><a href="#" id="d1y">👩🏻‍💼 DIY</a></li>
+      <!-- <li><a href="#" id="fm">😄 FM</a></li> -->
+      <!-- <li><a href="#" id="d1y">👩🏻‍💼 DIY</a></li> -->
       <li><a href="#" id="localMusic">🐬 本地音乐</a></li>
       <li><a href="#" id="mySetting">⚒ 设置</a></li>
     </ul>
-    <div class="bg-blur"></div>
-  </div>
-  <div class="noizio">
-    <div class="screen">
-      <ul class="check-wrap">
-        <li class="big-wrap">
-          <ul class="screen-wrap"></ul>
-        </li>
-      </ul>
-      <div class="noizio-close">
-        <img src="https://catbox.moe/pictures/qts/1448491901093.png" alt="">
-      </div>
-    </div>
-  </div>
-  <div class="fm">
     <div class="player-mask"></div>
   </div>
-  <div class="woyaomeizi">
-    <div class="player-mask" style="opacity: .6"></div>	
+  <div class="noizio fixed animate-left">
+    <div class="screen">
+      <ul class="screen-wrap"></ul>
+    </div>
+  </div>
+  <div class="woyaomeizi fixed animate-right">
+    <div class="player-mask" style="opacity: .6"></div>
     <div class="woyaomeizi-info">
       <p align="center">
         <img src="https://files.catbox.moe/f5tov8.png">
@@ -274,7 +282,7 @@
       </p>
     </div>
   </div>
-  <div class="gSetting">
+  <div class="gSetting fixed animate-left">
     <div class="player-mask"></div>
     <svg id="fork" width="60" height="60" viewBox="0 0 250 250" style="color:#fff; position: absolute; top: 0; border: 0; right: 0;z-index: 9999;" aria-hidden="true">
       <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
@@ -339,5 +347,5 @@
 <script src="main.js"></script>
 <script src="jquery.min.js"></script>
 <script src='app.js'></script>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js" ></script>
 </html>

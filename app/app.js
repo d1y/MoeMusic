@@ -1,6 +1,13 @@
 function go() {
   window.location.reload()
 }
+const electron = require('electron'),
+  fs = require('fs'),
+  remote = require('electron').remote,
+  patn = require('path'),
+  dataPath = (electron.app || electron.remote.app).getPath('userData'),
+  fileUrl = `${dataPath}/localmusic.json`
+
 let api = {
   search: require(`./api/module/search.js`),
   playlistHighquality: require(`./api/module/top_playlist_highquality.js`),
@@ -16,6 +23,123 @@ let api = {
 }
 const mouseDown = require('./mousetrap.min')
 $(() => {
+  // 本地音乐
+  $('.scan-files').on('dblclick', e => {
+    fs.readFile(fileUrl, (err, bu) => {
+      if (err) {
+        console.error(err);
+        fs.writeFile(fileUrl, '{"code":-1}', function(err) {
+          if (err) throw err;
+          console.log('文件写入成功');
+        });
+      }
+    })
+    remote.dialog.showOpenDialog({
+      title: '选择添加目录',
+      // 文件夹 & 多选 & 文件
+      properties: ['openDirectory', 'multiSelections', 'openFile'],
+    }, (files) => {
+      window.localMM = {
+        "code": 1,
+        "music": []
+      }
+      if (!files) return;
+      let arr = ["abstract", "animals", "business", "cats", "city", "food", "nightlife", "fashion", "people", "nature", "sports", "technics"]
+      // 生成随机图片
+      let randomImg = () => {
+        let r = () => {
+            return Math.floor(Math.random() * (arr.length - 1))
+          },
+          w = '250',
+          h = '250',
+          url = `http://lorempixel.com/${w}/${h}/${arr[r()]}`
+        return url
+      }
+      let loadFile = (name) => {
+        let ex = patn.extname(name)
+        if (ex == '.mp3' || ex == '.m4a') {
+          let rp = '.mp3'
+          if (ex == '.m4a') rp = '.m4a'
+          window.localMM.music.push({
+            name: patn.posix.basename(name.replace(rp, '')),
+            pic: randomImg(),
+            url: name
+          })
+        }
+      }
+      // 最多只循环两层
+      files.forEach(item => {
+        fs.stat(item, (err, stats) => {
+          console.log('成功');
+          if (stats.isDirectory()) {
+            fs.readdir(item, (err, f) => {
+              console.log(f);
+              if (err) {
+                console.error(err)
+                return
+              }
+              f.forEach(name => {
+                fs.stat(`${item}/${name}`, (err, stats) => {
+                  if (stats.isFile()) loadFile(`${item}/${name}`)
+                  console.log('成功+1');
+                })
+              })
+            })
+          } else if (stats.isFile()) loadFile(item)
+        })
+      })
+      {
+        $('.localmusic-text').text('加载中(◡ᴗ◡✿),骚等')
+        let eves = setInterval(e=>{
+          if (window.localMM.music){
+            fs.writeFile(fileUrl, JSON.stringify(window.localMM), function(err) {
+              if (err) throw err;
+              console.log('文件写入成功');
+            });
+            loadMusic()
+            $('#local-list').addClass('show')
+            clearInterval(eves)
+          }
+        },1000)
+      }
+    })
+  })
+  let loadMusic = () =>{
+    fs.readFile(fileUrl,(err,data)=>{
+      if (err) {
+        console.error(err);
+        return
+      }
+      data = JSON.parse(data)
+      console.log(data);
+      if (!data.music) return
+      $('.localmusic-text').hide()
+      $('#local-list').addClass('show')
+      let mm = data.music
+      mm.forEach((item,index)=>{
+        let li = $('<li>'),
+            a = $('<a>',{
+              href: 'javascript:void(0)',
+              html: `<strong>${index}</strong>. ${item.name}`,
+              'data-index': index,
+              'data-pic': item.pic,
+              'data-url': item.url
+            })
+            a.on('click',e=>{
+              console.log(item.name);
+            })
+            li.append(a)
+            $('#local-list').append(li)
+      })
+    })
+  }
+  loadMusic()
+  {
+    setTimeout(e => {
+      $('#loading').addClass('animate-top')
+    }, 3000)
+  }
+  // 主题
   let themeQQ = parseInt(window.localStorage.getItem('theme')) || 0
   if (themeQQ) {
     $('body').addClass('dark')
@@ -28,14 +152,15 @@ $(() => {
     $('body').removeClass('dark')
     window.localStorage.setItem('theme', 0)
   })
-  $('#mySetting').on('click', () => $('.gSetting').fadeIn())
+  $('#mySetting').on('click', () => $('.gSetting').addClass('show'))
   $('#btnCleanHistory').on('click', () => {
     window.localStorage.removeItem('playlist')
     window.List = []
     $('#player ul').html('')
   })
   $('#search-played').on('keydown', b => {
-    if ($('#search-played').val() == '') {
+    if (!$('#search-played').val()) {
+      console.log('ed');
       LL(List)
       return
     }
@@ -55,8 +180,8 @@ $(() => {
   $('#g_menu').on('click', () => {
     $('.gMenu').eq(0).addClass('show')
   })
-  $('.gSetting').hide()
-  $('#gSetting-close').on('click', () => $('.gSetting').fadeOut())
+  $('#gSetting-close').on('click', () => $('.gSetting').removeClass('show'))
+  // 登录隐藏
   if (window.localStorage.getItem('user')) {
     let userPY = JSON.parse(window.localStorage.getItem('user'))
     $('#g-user img.fl').attr('src', userPY.img)
@@ -66,6 +191,7 @@ $(() => {
   } else {
     $('#g-user,#btnRecommend,#myPlaylist').hide()
   }
+  // 登录
   $('.login-submit').on('click', () => {
     let mUser = /^((13[0-9])|(14[5|7])|(15([0-3]|[5-9]))|(18[0,5-9]))\d{8}$/,
       mPd = /^(\w){6,20}$/
@@ -210,13 +336,13 @@ $(() => {
   let Music = $('#music')[0]
   let played = (arg) => {
       arg = arg || {}
-      $('#bg,#musicCover,.bg-blur,#player-mask,.mask').css('backgroundImage', `url(${arg.pic})`)
-      setTimeout(()=>{
-        let color = Math.floor((gr.length-1)-Math.random()*(gr.length-1))
+      $('#musicCover,#player-mask').css('backgroundImage', `url(${arg.pic})`)
+      setTimeout(() => {
+        let color = Math.floor((gr.length - 1) - Math.random() * (gr.length - 1))
         $('#pb1,#volumeBar,.noizio').css({
           background: `linear-gradient(to right, ${gr[color]['colors'][0]}, ${gr[color]['colors'][1]})`
         })
-      },3000)
+      }, 3000)
       $('#musicPlayer').addClass('show')
       $('#music').attr({
         'src': arg.url,
@@ -280,7 +406,7 @@ $(() => {
     },
     musicStatus = () => {
       MusicInfo()
-      getID('musicPlayer').className = 'show'
+      $('#musicPlayer').addClass('show')
       for (let i = 0; i < 2; i++) {
         getID('player-ctrl').getElementsByTagName('span')[i].className = ''
       }
@@ -293,7 +419,6 @@ $(() => {
         let msg = {
           title: `正在播放: ${getID('music').getAttribute('data-name')}`,
           body: `来自: ${getID('music').getAttribute('data-by')}`,
-          // icon: `./assets/moe.png`
           icon: $(music).attr('data-pic')
         }
         new window.Notification(msg.title, msg)
@@ -303,23 +428,20 @@ $(() => {
         timeId = setInterval(() => {
           getID('pb1').style
             .width = (Music.currentTime / Music.duration * 100).toString() + "%"
-          // for (i in Lyric){
-          //   if (Music.currentTime == i) {
-          //     for (let b=0; b<$('.player-lyric')[0].player-lyric; b++){
-          //       let a = $('.player-lyric')[0]
-          //       a.children.forEach((item,index)=>{
-          //         let av = index + 1
-          //         $(item).removeClass('light')
-          //         if ($(item).attr('data-time') == i){
-          //           $(item).addClass('light')
-          //           $('.player-lyric').scrollTop($(item).outerHeight() * av)
-          //         }
-          //       })
-          //     }
-          //     $('.player-lyric li')
-          //   }
-          // }
-          // Music.currentTime
+            if (a){
+              for (let i in a) {
+                if (Math.floor(Music.currentTime) == i){
+                  let li = $('<li>', {
+                    'data-time': i,
+                    html: a[i]
+                  })
+                  li.on('click', () => {
+                    Music.currentTime = li.attr('data-time')
+                  })
+                  $('#player-lyric .player-lyric').append(li)
+                }
+              }  
+            }
           if (Music.ended) {
             switch (mode) {
               case 'order':
@@ -362,7 +484,7 @@ $(() => {
   $('#musicPlayer').on('mouseover', () => $('#progress-bar').addClass('show'))
   $('#musicPlayer').on('mouseout', () => $('#progress-bar').removeClass('show'))
   $('#pb1-copy').on('click', (e) => {
-    let tmp = e.offsetX / getID('volumeWrap').clientWidth
+    let tmp = e.offsetX / getID('pb1-copy').clientWidth
     Music.currentTime = tmp * Music.duration
     getID('pb1').style.width = (tmp * 100).toString() + '%'
     for (let i = 0; i < 2; i++) {
@@ -384,45 +506,45 @@ $(() => {
         .width = (e.offsetX / getID('volumeWrap').clientWidth * 100).toString() + '%'
     }, 50);
   })
-  getID('volume-bar').addEventListener('dblclick', (e) => {
+  $('#volume-bar').on('dblclick', (e) => {
     clearTimeout(isClickEnd);
     getID('volumeWrap').className = ''
   })
-  getID('volume-bar').addEventListener('click', (e) => {
+  $('#volume-bar').on('click', (e) => {
     Music.volume = e.offsetX / getID('volumeWrap').clientWidth
   })
-  getID('share-ins').addEventListener('click', () => {
+  $('#share-ins').on('click', () => {
     if (!$(Music).attr('data-share')) return
     $('.qrcode').eq(0).
     attr('src', `https://qrickit.com/api/qr.php?d=${$(Music).attr('data-share')}`)
     $('.share-name').eq(0).text($(Music).attr('data-name'))
     $('.share-by').eq(0).text($(Music).attr('data-by'))
-    getID('share').className = 'show'
+    $('#share').addClass('show')
     getID('share').style
       .backgroundImage = `url(${$(Music).attr('data-pic')})`
   })
-  getID('share').addEventListener('click', () => {
-    if (getID('share').className == 'show') {
-      getID('share').className = ''
+  $('#share').on('click', () => {
+    if ($('#share').hasClass('show')) {
+      $('#share').removeClass('show')
       return
     }
   })
   let mode = 'order'
   $('.mode-wrap').on('click', () => $('.mode-wrap').removeClass('show'))
-  getID('mode-loop').onclick = () => {
+  $('#mode-loop').on('click',() => {
     Music.setAttribute('loop', 'loop')
     mode = 'loop'
-  }
-  getID('mode-random').onclick = () => {
+  })
+  $('#mode-random').on('click',() => {
     Music.removeAttribute('loop')
     mode = 'random'
-  }
-  getID('mode-order').onclick = () => {
+  })
+  $('#mode-order').on('click',() => {
     Music.removeAttribute('loop')
     mode = 'order'
-  }
-  $('.playlist-detail').hide()
+  })
   let MusicInfo = () => {
+    $('#player').removeClass('show')
     let tmpBg = Music.getAttribute('data-pic')
     $('.player-mask').css({
       backgroundImage: `url(${tmpBg})`
@@ -441,13 +563,14 @@ $(() => {
             return r.json()
           })
           .then(data => {
+            console.log(data);
             let a = $('<a>', {
               class: 'no-lyric',
-              html: data.hitokoto
+              html: `${data.hitokoto}  - ${data.from} <br>- ${data.creator}`
             })
             $('#player-lyric .player-lyric').append(a)
           })
-          .catch(err=>{
+          .catch(err => {
             $('#player-lyric .player-lyric').append('<a>没有找到歌词 🍭</a>')
           })
         return
@@ -455,17 +578,6 @@ $(() => {
       a = parseLyric(e.body.lrc.lyric)
       window.Lyric = a
       $('#player-lyric ul').html('')
-      for (let i in a) {
-        let li = $('<li>', {
-          'data-time': i,
-          html: a[i]
-        })
-        li.on('click', () => {
-          Music.currentTime = li.attr('data-time')
-        })
-        $('#player-lyric .player-lyric').append(li)
-      }
-
       function parseLyric(lrc) {
         var lyrics = lrc.split("\n");
         var lrcObj = {};
@@ -487,20 +599,11 @@ $(() => {
       }
     })
   }
-  getID('musicCover').addEventListener('click', () => {
-    if ($('.player-cover').hasClass('show')) return
+  $('#musicCover').on('click', e=>{
     MusicInfo()
-    $('.player-cover').addClass('show')
+    $('.player-cover').toggleClass('show')
   })
-  mouseDown.bind(['ctrl+c', 'f f f'], e => {
-    if ($('.player-cover').hasClass('show')) return
-    MusicInfo()
-    $('.player-cover').addClass('show')
-    // $('#musicCover').trigger('click')
-  })
-  getID('player-cover-close').addEventListener('click', () => {
-    $('.player-cover').removeClass('show')
-  })
+  mouseDown.bind(['ctrl+c', 'f f f'], MusicInfo)
   window.List = JSON.parse(localStorage.getItem('playlist')) || [{
     "by": "Hardwell/Atmozfears/M.BRONX",
     "href": "https://music.163.com/m/song?id=493043002",
@@ -584,7 +687,7 @@ $(() => {
             })
             $('.playlist-tags').html(`标签: ${imTag}`)
             $('.playlist-desc').text(`${e.body.playlist.description}`)
-            $('.playlist-detail').slideDown('slow')
+            $('.playlist-detail').addClass('show')
             e.body.playlist.tracks.forEach((pp, index) => {
               let lii = ''
               pp.ar.forEach(il => {
@@ -638,7 +741,7 @@ $(() => {
         p1.setAttribute('data-id', '🤟' + rs.creator.nickname)
         p1.setAttribute('data-count', '👏' + rs.playCount)
         img.src = rs.coverImgUrl
-        p2.className = 'list-hot-name'
+        p2.className = 'text-overflow'
         p2.innerHTML = rs.name
         li.appendChild(a)
         p1.appendChild(img)
@@ -651,7 +754,7 @@ $(() => {
   playHot('电子')
 
   $('#playlist-header-close').on('click', () => {
-    $('.playlist-detail').fadeOut()
+    $('.playlist-detail').removeClass('show')
   })
   $('.tag a').each((index, item) => {
     $(item).on('click', () => {
@@ -686,8 +789,7 @@ $(() => {
   mouseDown.bind(['command+f', 'ctrl+f'], SEARCH)
   mouseDown.bind(['command+m', 'ctrl+m'], () => $('.gMenu').toggleClass('show'))
   mouseDown.bind('esc', () => {
-    $('.playlist-detail').hide()
-    $('.gMenu,#player,.search-wrap,.login-wrap,.player-cover').removeClass('show')
+    $('.playlist-detail,.gMenu,#player,.search-wrap,.login-wrap,.player-cover,.noizio').removeClass('show')
   })
   mouseDown.bind(['command+p', 'ctrl+p'], () => $('#musicPlayer').toggleClass('show'))
   mouseDown.bind('ctrl+a', () => $('#playlist').trigger('click'))
@@ -716,10 +818,10 @@ $(() => {
   mouseDown.bind('2', e => {
     Music.currentTime += 5
   })
-  mouseDown.bind('w o y a o m e i z i', e=>{
+  mouseDown.bind('w o y a o m e i z i', e => {
     $('.woyaomeizi').addClass('show')
   })
-  mouseDown.bind('w o s h i f e i z h a i', e=>{
+  mouseDown.bind('w o s h i f e i z h a i', e => {
     $('.woyaomeizi').removeClass('show')
   })
   $('#search-limit').on('blur', e => {
@@ -735,18 +837,9 @@ $(() => {
   $('#history-fask').on('blur', e => {
     window.localStorage.setItem('history', Boolean(parseInt($('#history-fask').val())))
   })
-  // $('#user-refresh').on('click',e =>{
-  //   if (window.localStorage.getItem('ck')){
-  //     console.log(JSON.parse(window.localStorage.getItem('ck')));
-  //     api.loginRefresh({
-  //       // cookie: JSON.parse(window.localStorage.getItem('ck'))
-  //     },api.end).then(data=>{
-  //       console.log(data);
-  //     })
-  //   }
-  // })
 })
 let SEARCH = () => {
+  $('.gMenu').removeClass('show')
   $('.search-wrap').toggleClass('show')
   $('#g_search').focus()
   $('#search-hot,#history').html('')
@@ -785,7 +878,6 @@ let SEARCH = () => {
 // 右键菜单
 const menu = document.getElementById('menu');
 let menuVisible = false;
-$(menu).hide()
 const toggleMenu = command => {
   menu.style.display = command === "show" ? "block" : "none";
   menuVisible = !menuVisible;
@@ -831,8 +923,8 @@ fetch('https://github.com/ghosh/uiGradients/raw/master/gradients.json')
   fetch('./assets/noizio.json')
     .then(r => r.json())
     .then(data => {
-      data.forEach((item)=>{
-        let li = $('<li>',{
+      data.forEach((item) => {
+        let li = $('<li>', {
           'data-sound': item.sound,
           html: `<img src="${item.img}"> <p>${item.title}</p>`
         })
@@ -842,39 +934,38 @@ fetch('https://github.com/ghosh/uiGradients/raw/master/gradients.json')
         ad.src = li.attr('data-sound')
         ad.loop = 'loop'
         li.append(ad)
-        li.on('click',e=>{
+        li.on('click', e => {
           let dev = li.find('audio')[0]
-          if (dev.paused){
+          if (dev.paused) {
             dev.play()
-          }else {
+          } else {
             dev.pause()
           }
         })
         $(".screen-wrap").append(li)
       })
     })
-  $('.noizio-close').on('click',e=>{
+  $('.noizio-close').on('click', e => {
     $('.noizio').removeClass('show')
     $('#musicPlayer').addClass('show')
   })
 }
 
 {
-  $('.noizio')[0].onmousewheel = e =>{
+  $('.noizio')[0].onmousewheel = e => {
     let lf = Math.abs(parseInt($('.big-wrap').css('left')))
-    if (e.wheelDelta == -120){
+    if (e.wheelDelta == -120) {
       if (lf >= 1000) return
       if (lf == 720) {
         $('.big-wrap').css({
           left: `-1000px`
         })
-      }else {
+      } else {
         $('.big-wrap').css({
           left: `-${lf+=720}px`
         })
       }
-    }
-    else if (e.wheelDelta == 120){
+    } else if (e.wheelDelta == 120) {
       if (lf <= 0) return
       $('.big-wrap').css({
         left: `0px`
@@ -884,8 +975,13 @@ fetch('https://github.com/ghosh/uiGradients/raw/master/gradients.json')
 }
 
 {
-  $('#noizio').on('click',e=>{
+  $('#noizio').on('click', e=> {
     $('.noizio').addClass('show')
     $('.gMenu,#musicPlayer').removeClass('show')
   })
+  $('#localMusic').on('click',e=> {
+    $('.localMusic').addClass('show')
+    $('.gMenu,#musicPlayer').removeClass('show')
+  })
+  $('#localMusic-close').on('click',e=> $('.localMusic').removeClass('show'))
 }

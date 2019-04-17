@@ -115,7 +115,9 @@ $(() => {
       if (!data.music) return
       $('.localmusic-text').hide()
       $('#local-list').addClass('show')
-      let mm = data.music
+      let mm = data.music,
+          audioNext = $('#audioNext').get(0)
+          // txt = $('.local-cur-txt')[0]
       mm.forEach((item,index)=>{
         let li = $('<li>'),
             a = $('<a>',{
@@ -125,8 +127,11 @@ $(() => {
               'data-pic': item.pic,
               'data-url': item.url
             })
-            a.on('click',e=>{
-              console.log(item.name);
+            a.on('click',e =>{
+              // txt.innerHTML = item.name
+              audioNext.pause()
+              audioNext.src = item.url
+              audioNext.play()
             })
             li.append(a)
             $('#local-list').append(li)

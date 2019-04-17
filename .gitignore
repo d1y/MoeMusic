@@ -4,3 +4,4 @@ app/dist
 .DS_Store
 api/
 release/
+cli/

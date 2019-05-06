@@ -69,7 +69,9 @@
   "homepage": "https://github.com/d1y/moemusic.git#readme",
   "devDependencies": {
     "electron": "^4.0.4",
-    "electron-builder": "^20.38.3"
+    "electron-builder": "^20.38.3",
+    "gulp": "^4.0.1",
+    "gulp-sass": "^4.0.2"
   },
   "dependencies": {
     "pac-proxy-agent": "^3.0.0",

@@ -6,3 +6,4 @@ api/
 release/
 cli/
 src/css
+src/static/tabs

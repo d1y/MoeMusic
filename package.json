@@ -4,12 +4,12 @@
   "description": "a moe music",
   "main": "main.js",
   "scripts": {
-    "start": "electron . --enable-logging --debug",
+    "start": "electron .",
     "dist-win": "electron-builder --win --x64",
     "dist-osx": "electron-builder -m --x64",
     "dist-linux": "electron-builder -l deb tar.xz",
     "dist-all": "sudo rm -rf release && electron-builder -mwl",
-    "server": "cd app && browser-sync --server --files '**' .",
+    "server": "browser-sync --server --files '**' .",
     "api": "rm -rf app/api && git clone https://github.com/Binaryify/NeteaseCloudMusicApi.git app/api && cd app/api && sudo cnpm install"
   },
   "build": {
@@ -19,7 +19,7 @@
     "copyright": "Copyright © 2018 ${author}",
     "artifactName": "${productName}-${version}-${os}-${arch}.${ext}",
     "mac": {
-      "icon": "app/assets/icon.icns"
+      "icon": "src/static/logos/icon.icns"
     },
     "linux": {
       "target": [
@@ -27,13 +27,13 @@
         "rpm",
         "AppImage"
       ],
-      "icon": "./app/assets/moe.png",
+      "icon": "src/static/logos/moe.png",
       "category": "Music",
       "executableName": "moemusic"
     },
     "win": {
       "target": "nsis",
-      "icon": "./app/assets/moe.png"
+      "icon": "src/static/logos/moe.png"
     },
     "nsis": {
       "oneClick": false,
@@ -71,10 +71,13 @@
     "electron": "^4.0.4",
     "electron-builder": "^20.38.3",
     "gulp": "^4.0.1",
+    "gulp-pug": "^4.0.1",
     "gulp-sass": "^4.0.2"
   },
   "dependencies": {
+    "nes.css": "^2.1.1",
     "pac-proxy-agent": "^3.0.0",
+    "pug": "^2.0.3",
     "request": "^2.88.0"
   }
 }

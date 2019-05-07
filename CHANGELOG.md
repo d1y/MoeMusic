@@ -1,4 +1,10 @@
+## V-20190506
+
+- 全部重构,`MM`只是想成为你的女票~
+- 使用`NES.CSS`来编写
+
 ## V-20190206
+
 - 修复大量`bug`
 - 优化和添加快捷键的支持
 - 弃用`sirlwave.js`
@@ -8,10 +14,13 @@
 - 添加了彩蛋
 
 ## V-0.0.1 - beta
+
 - 弃用`mdui`
 - "劳资就算是死也不可能用jQuery" - "真香"
 - 重新画了一个`logo`
+
 ![](./app/assets/moe.png)
+
 - 不用别人的`api`了,用上了: [Binaryify/NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)，**从这个版本之后都会是用的这个**
 - 添加了音乐声波
 - 在播放详情里添加歌词~
@@ -23,11 +32,13 @@
 - 下载功能又回来了,现在只是默认的跳转到系统的默认浏览器上下载~
 
 #### 截图
+
 ![](https://files.catbox.moe/mcu06j.gif)
 ![](https://files.catbox.moe/2e46iw.gif)
 ![](https://files.catbox.moe/iypdtq.gif)
 
 #### 快捷键
+
 | keys | function     |
 | :------------- | :------------- |
 | `ctrl+m` & `⌘+m`       | Global menu  |
@@ -37,6 +48,7 @@
 | `esc` | exit all Two level menu |
 
 ## V-0.0.1 - alpha
+
 - `mdui`
 - [x] 分享
 - [x] 使用自定义的窗口按钮

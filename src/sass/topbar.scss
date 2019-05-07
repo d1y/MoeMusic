@@ -1,0 +1,111 @@
+@import './color.scss';
+
+$topBar: 1.875rem;
+$dragWidth: 70vw;
+
+
+#topbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: $topBar;
+  z-index: 88;
+  // 可拖动区域
+  .drag-wrap {
+    position: relative;
+    width: $dragWidth;
+    height: $topBar;
+    -webkit-app-region: drag;
+    z-index: 888;
+  }
+
+  .tabs {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: $topBar;
+    background-size: 100%;
+    background-image: url('../static/tabs/PerMikuDots1.png');
+    opacity: .8;
+  }
+
+  // 控制区域
+  .ctrl {
+    padding-top: .5rem;
+    padding-let: 1.33vw;
+    -webkit-user-select: none;
+    height: $topBar;
+    line-height: 2.125rem;
+
+    // 小圆点控制
+    $osx: .75rem;
+    $osx-left: .5rem;
+    span {
+      position: relative;
+      display: inline-block;
+      width: $osx;
+      height: $osx;
+      border-radius: 50%;
+      border: 1px solid;
+      margin-left: $osx-left;
+      transition: all .3s;
+    }
+
+    #osx-close {
+      background: $red-light;
+      border-color: $red-dark;
+      margin-left: .625rem;
+      &:after,
+      &:before {
+        content: "";
+        position: absolute;
+        top: 4px;
+        display: block;
+        width: 8px;
+        height: 2px;
+        background: #333;
+        border-radius: 1px;
+        transform: rotate(40deg);
+        opacity: 0;
+        transition: all .2s;
+      }
+      &:before {
+        transform: rotate(-40deg)
+      }
+    }
+    
+    
+    #osx-min {
+      background: $orange-light;
+      border-color: $orange-dark;
+      &:before {
+        content: "";
+        position: absolute;
+        top: 4px;
+        left: 1px;
+        display: block;
+        width: 80%;
+        height: 2px;
+        background: #333;
+        opacity: 0;
+        transition: all .2s;
+      }
+    }
+    
+    #osx-max {
+      background: $green-light;
+      border-color: $green-dark;
+    }
+
+    &:hover {
+      cursor: pointer;
+      #osx-min:before,
+      #osx-close:after,
+      #osx-close:before {
+        opacity: .8;
+      }
+    }    
+  }
+}

@@ -75,6 +75,8 @@
     "gulp-sass": "^4.0.2"
   },
   "dependencies": {
+    "lodash": "^4.17.11",
+    "lowdb": "^1.0.0",
     "nes.css": "^2.1.1",
     "pac-proxy-agent": "^3.0.0",
     "pug": "^2.0.3",

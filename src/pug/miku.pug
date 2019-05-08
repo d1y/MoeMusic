@@ -7,10 +7,12 @@ div.zi-main.zi-layout.ex-layout
         div.zi-card.ex-code-box
           each i in ['听音乐 🎸','Noizio 🙊','葫芦侠 ♐️']
             button.zi-btn.medium #{i}
-  div.zi-dialog-root
+  div.zi-dialog-root.fade
     div.zi-dialog-backdrop
     div.zi-dialog-backdrop.responsive
     div.zi-dialog-wrapper
       div.zi-dialog-content
         div.body 你想听本地音乐还是网络音乐呢?
       div.zi-dialog-footer
+        button.action#local 本地音乐
+        button.action 网络音乐

@@ -5,7 +5,12 @@ html
     link(rel="stylesheet", href="https://cdn.jsdelivr.net/npm/@zeit-ui/style@latest/dist/style.css")
     link(rel="stylesheet", href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap-grid.css")
     link(rel="stylesheet", href="../css/topbar.css")
+    link(rel="stylesheet", href="../css/dialog.css")
+    //- link(rel="stylesheet", href="../colorui/main.css")
+    link(rel="stylesheet", href="../dist/bootstrap-css-utils.min.css")
     title Miku
   body
     include osx.pug
     include miku.pug
+    include music/local.pug
+    script(src="../lib/dom.js")

@@ -1,5 +1,4 @@
-const { app,BrowserWindow } = require('electron')
-const url = require('url')
+const { app,BrowserWindow,ipcMain } = require('electron')
 
 let win
 
@@ -9,8 +8,8 @@ const window = {
   alwaysOnTop: false,
   frame: false,
   transparent: true,
-  resizable: false,
-  maximizable: false,
+  // resizable: false,
+  // maximizable: false,
   center: true,
   skipTaskbar: true,
   icon: './src/static/logos/moe.png'
@@ -23,12 +22,22 @@ const createWindow = () => {
   let devURL = `http://localhost:3000`
 
   // 开发环境
-  win.loadURL(`${devURL}/src/pages/index.html`)
+  // win.loadURL(`${devURL}/src/pages/index.html`)
 
   // 上线环境
-  
+  win.loadFile(`${__dirname}/src/pages/index.html`)
+
   // 开发者模式
   win.webContents.openDevTools()
+
+  ipcMain.on('osx-close',()=> win.close())
+  
+  ipcMain.on('osx-min',()=> win.minimize())
+
+  ipcMain.on('osx-max',()=> {
+    if (process.platform == 'win32') return
+    win.isMaximized() ? win.unmaximize():win.maximize();
+  })
 
   // user-agent
   win.webContents.setUserAgent('Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_6) AppleWebKit/603.3.8 (KHTML, like Gecko) Version/10.1.2 Safari/603.3.8');

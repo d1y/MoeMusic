@@ -2,7 +2,7 @@ const gulp = require('gulp'),
 			pug = require('gulp-pug'),
 			sass = require('gulp-sass')
 gulp.task('pug', ()=> {
-	return gulp.src('./src/pug/index.pug')
+	return gulp.src('./src/pug/**/*.pug')
 		.pipe(pug({
 			pretty:true
 		}))
@@ -14,5 +14,5 @@ gulp.task('sass',()=> {
 		.pipe(gulp.dest(`src/css`))
 })
 
-gulp.watch(`${__dirname}/src/pug/*.pug`,gulp.series('pug'))
+gulp.watch(`${__dirname}/src/pug/**/*.pug`,gulp.series('pug'))
 gulp.watch(`${__dirname}/src/sass/*.scss`,gulp.series('sass'))

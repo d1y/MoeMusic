@@ -1,4 +1,4 @@
-div.zi-dialog-root
+div.zi-dialog-root(style='overflow:hidden')
     div.zi-dialog-backdrop
     div.zi-dialog-backdrop.responsive
     div.diy.zi-dialog-wrapper
@@ -8,6 +8,23 @@ div.zi-dialog-root
             div.margin-top-sm
               button.zi-btn#scanToMusic 扫描
               input.zi-input
-            ul
+            div.local-wrap
+              ul#local-list
       div.zi-dialog-footer
         button.action 关闭
+div#musicPlayer.show
+  div.clearfix
+    div.fl.por(style="top: -5px")
+      span.icono-caretLeft.btn(title="上一曲")
+      span.icono-caretRight.btn(title="下一曲")
+    div.clearfix.fl.currentWrap
+      div.fl
+        span#currentTitle Atmozfears - She goes
+      div.fr 
+        span#currentTime 03:00 /
+        span#currentTotal 08:24
+  div.progress-bar
+    div.progress-bar-wrap
+    div.progress-bar-check
+      div
+  button.icono-caretDown#musicPlayer-close.btn(title="点击关闭")

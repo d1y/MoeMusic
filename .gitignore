@@ -5,5 +5,5 @@ app/dist
 api/
 release/
 cli/
-src/css
-src/static/tabs
+*.css
+*.html

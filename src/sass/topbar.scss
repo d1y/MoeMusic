@@ -3,7 +3,9 @@
 $topBar: 1.875rem;
 $dragWidth: 70vw;
 
-
+body {
+  cursor: url('../static/assets/cursor.png'),auto;
+}
 #topbar {
   position: fixed;
   top: 0;

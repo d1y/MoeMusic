@@ -3,9 +3,9 @@
   <head>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@zeit-ui/style@latest/dist/style.css"/>
     <link rel="stylesheet" href="https://cdn.bootcss.com/twitter-bootstrap/4.3.1/css/bootstrap-grid.css"/>
-    <link rel="stylesheet" href="../css/topbar.css"/>
-    <link rel="stylesheet" href="../css/dialog.css"/>
+    <link rel="stylesheet" href="../css/main.css"/>
     <link rel="stylesheet" href="../dist/bootstrap-css-utils.min.css"/>
+    <link rel="stylesheet" href="https://icono-49d6.kxcdn.com/icono.min.css"/>
     <title>Miku</title>
   </head>
   <body>
@@ -44,7 +44,7 @@
         </div>
       </div>
     </div>
-    <div class="zi-dialog-root">
+    <div class="zi-dialog-root" style="overflow:hidden">
       <div class="zi-dialog-backdrop"></div>
       <div class="zi-dialog-backdrop responsive"></div>
       <div class="diy zi-dialog-wrapper">
@@ -55,13 +55,31 @@
               <button class="zi-btn" id="scanToMusic">扫描</button>
               <input class="zi-input"/>
             </div>
-            <ul></ul>
+            <div class="local-wrap">
+              <ul id="local-list"></ul>
+            </div>
           </div>
         </div>
         <div class="zi-dialog-footer">
           <button class="action">关闭</button>
         </div>
       </div>
+    </div>
+    <div class="show" id="musicPlayer">
+      <div class="clearfix">
+        <div class="fl por" style="top: -5px"><span class="icono-caretLeft btn" title="上一曲"></span><span class="icono-caretRight btn" title="下一曲"></span></div>
+        <div class="clearfix fl currentWrap">
+          <div class="fl"><span id="currentTitle">Atmozfears - She goes</span></div>
+          <div class="fr"> <span id="currentTime">03:00 /</span><span id="currentTotal">08:24</span></div>
+        </div>
+      </div>
+      <div class="progress-bar">
+        <div class="progress-bar-wrap"></div>
+        <div class="progress-bar-check">
+          <div></div>
+        </div>
+      </div>
+      <button class="icono-caretDown btn" id="musicPlayer-close" title="点击关闭"></button>
     </div>
     <script src="../lib/dom.js"></script>
   </body>

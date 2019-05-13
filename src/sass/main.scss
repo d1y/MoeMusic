@@ -1,0 +1,43 @@
+@import './color.scss';
+@import './dialog.scss';
+@import './topbar.scss';
+@import './music.scss';
+$eyes: #007aff;
+
+.clearfix:before,
+.clearfix:after {
+  content: "";
+  clear: both;
+  display: table;
+  height: 0;
+}
+.fl {
+  float: left;
+}
+.fr {
+  float: right;
+}
+.por {
+  position: relative;
+}
+.local-wrap {
+  height: 75vh;
+  overflow: hidden;
+  #local-list {
+    height: 98%;
+    overflow: auto;
+    li:before {
+      opacity: 0;
+      transition: all .3s;
+    }
+    li {
+      &:hover {
+        color: $eyes;
+        &:before {
+          opacity: 1;
+          color: $eyes;
+        }
+      }
+    }
+  }
+}

@@ -4,10 +4,15 @@ div.zi-dialog-root(style='overflow:hidden')
     div.diy.zi-dialog-wrapper
       div.zi-dialog-content
         div.body
-            div.zi-note.hint <span class="zi-note-type">提示: </span>请添加你需要扫描的音乐文件夹
+            div.zi-note.hint#zi-scan-tips <span class="zi-note-type">提示: </span>请添加你需要扫描的音乐文件夹
             div.margin-top-sm
               button.zi-btn#scanToMusic 扫描
-              input.zi-input
+              input.zi-input(style='min-width: 40vw')
+            div#zi-music-ctrl
+              button.zi-btn.currentCtrl#local-music-played Play
+              button.zi-btn.currentCtrl#local-music-volume Volume
+              button.zi-btn.currentCtrl#local-music-loop Loop
+              button.zi-btn.currentCtrl#local-music-mode Mode
             div.local-wrap
               ul#local-list
       div.zi-dialog-footer

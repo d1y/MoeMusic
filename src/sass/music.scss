@@ -47,7 +47,6 @@ button[class*=icono-] {
   left: 100px;
   width: 60vw;
   height: 20px;
-  // background: #333;
   .progress-bar-wrap,
   .progress-bar-check {
     position: absolute;
@@ -64,18 +63,20 @@ button[class*=icono-] {
     width: 100%;
     height: 80%;
     z-index: 234;
-    background: rgba(0,0,0,.1);
+    background: rgba(210, 204, 204, 0.1);
+    box-shadow: 0px 0px 8px 5px rgba(226, 220, 220, 0.1);
   }
   .progress-bar-check {
+    width: 100%;
     padding: 0 5px;
     div {
-      width: 100%;
       width: 50%;
       height: 4px;
       background: $main / .1;
       margin: 0 6px;
       border-radius: 8px;
       box-shadow: inset 0 1px 1px rgba(0,0,0,.075), 0 0 8px rgba(102,175,233,.6);
+      transition: all .3s;
     }
   }
 }
@@ -86,4 +87,12 @@ button[class*=icono-] {
   left: 2.44rem;
   width: 60%;
   opacity: 0.8;
+}
+
+.currentCtrl {
+  min-width: auto;
+}
+
+.zi-none {
+  display: none!important;
 }

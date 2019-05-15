@@ -18,9 +18,12 @@ let exists =  path => fs.existsSync(path) || path.existsSync(path),
     isFile = path => exists(path) && fs.statSync(path).isFile(),
     isDir = path => exists(path) && fs.statSync(path).isDirectory()
 
+let jq = ele=> document.querySelector(ele)
+
 module.exports = {
   fsExistsSync,
   log,
   isFile,
-  isDir
+  isDir,
+  jq
 }

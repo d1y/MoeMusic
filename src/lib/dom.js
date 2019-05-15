@@ -53,7 +53,10 @@ function loadSongs(db) {
 
 function checkMusic (e) {
   set('local_songs_index',this.getAttribute('data-index')-1)
+  set('local_songs_url',this.getAttribute('data-url'))
+  set('local_songs_name',this.getAttribute('data-name'))
   MUSIC.src(this.getAttribute('data-url'))
+  MUSIC.play()
 }
 
 loadSongs(db)

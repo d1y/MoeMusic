@@ -1,12 +1,26 @@
 const MUSIC = new Audio()
 
+document.body
+  .appendChild(MUSIC)
+
 let play = ()=> MUSIC.play(),
     pause = ()=> MUSIC.pause(),
     src = e=> MUSIC.src = e,
-    loop = ()=> MUSIC.setAttribute('loop','loop'),
-    loopClear = ()=> MUSIC.removeAttribute('loop'),
-    VReduce = ()=> MUSIC.volume = MUSIC.volume <= 0.1 ? MUSIC.volume :  MUSIC.volume - 0.1,
-    VPlus = ()=> MUSIC.volume = MUSIC.volume >= 0.9 ? MUSIC.volume : MUSIC.volume - 0.1,
+    loop = ()=> MUSIC.getAttribute('loop') ? MUSIC.removeAttribute('loop') : MUSIC.setAttribute('loop','loop'),
+    VReduce = ()=> {
+      if (MUSIC.volume*100 <= 10) {
+        MUSIC.volume = .1
+        return
+      }
+      MUSIC.volume -= .1
+    },
+    VPlus = ()=> {
+      if (MUSIC.volume*100 >= 90) {
+        MUSIC.volume = .9
+        return
+      }
+      MUSIC.volume += .1
+    },
     currentTime = ()=> MUSIC.currentTime,
     setTime =  time=> MUSIC.currentTime = time,
     currentSrc = ()=> MUSIC.currentSrc,
@@ -19,7 +33,6 @@ module.exports = {
   pause,
   src,
   loop,
-  loopClear,
   VReduce,
   VPlus,
   currentSrc,

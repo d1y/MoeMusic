@@ -4,7 +4,14 @@ const local = document.querySelector('#local'),
   root = document.querySelector('.zi-dialog-root'),
   dev = document.querySelector('.zi-btn.medium'),
   create = require('../lib/createElement'),
-  {db,set,get} = require('../lib/local'),
+  {
+    db,
+    set,
+    get,
+    isSongs,
+    loadSongs,
+    playTasks
+  } = require('../lib/local'),
   MUSIC = require('../lib/localMusic')
 
 require('../lib/osx.js')
@@ -32,33 +39,36 @@ document.getElementById('scanToMusic')
       title: '添加目录',
       properties: ['openDirectory', 'multiSelections', 'openFile']
     }, files => {
+      console.log(`扫描的目录`,files)
       const scan = require('../lib/scan.js')
       scan(files)
       loadSongs(db)
+      isSongs()
     })
   })
 
-function loadSongs(db) {
-  const ul =  document.querySelector('#local-list')
-  ul.innerHTML = ``
-  db.forEach((item,index)=> {
-    const li = create.li({},item.name)
-    li.setAttribute('data-name',item.name)
-    li.setAttribute('data-url',item.src)
-    li.setAttribute('data-index',index+1)
-    li.addEventListener('click',checkMusic)
-    ul.appendChild(li)
-  })
-}
-
-function checkMusic (e) {
-  set('local_songs_index',this.getAttribute('data-index')-1)
-  set('local_songs_url',this.getAttribute('data-url'))
-  set('local_songs_name',this.getAttribute('data-name'))
-  MUSIC.src(this.getAttribute('data-url'))
+function checkMusic(e) {
+  // 存储在本地是为了提高性能???
+  set('local_songs_index', this.getAttribute('data-index') - 1)
+  set('local_songs_url', this.getAttribute('data-url'))
+  set('local_songs_name', this.getAttribute('data-name'))
+  MUSIC.Src(this.getAttribute('data-url'))
   MUSIC.play()
+  playTasks({
+    title: this.getAttribute('data-name'),
+  })
 }
 
 loadSongs(db)
 
-window.go = ()=> window.location.reload()
+{
+  let index = get('local_songs_index'),
+      name = get('local_songs_name'),
+      url = get('local_songs_url')
+  MUSIC.Src(url)
+  playTasks({
+    title: name
+  })
+}
+
+window.go = () => window.location.reload()

@@ -70,15 +70,13 @@
   "devDependencies": {
     "electron": "^4.0.4",
     "electron-builder": "^20.38.3",
-    "gulp": "^4.0.1",
+    "gulp": "^4.0.2",
     "gulp-pug": "^4.0.1",
     "gulp-sass": "^4.0.2",
     "pug": "^2.0.3"
   },
   "dependencies": {
     "create-elements": "^1.1.9",
-    "lodash": "^4.17.11",
-    "node-mpv": "^1.4.3",
     "pac-proxy-agent": "^3.0.0",
     "request": "^2.88.0"
   }

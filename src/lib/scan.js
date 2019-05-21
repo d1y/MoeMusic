@@ -27,19 +27,18 @@ function hasItem(arr,id) {
   })
   return false
 }
-function scan(t) {
 
+function scan(t) {
   if (!Array.isArray(t)) return
   for (let index = 0; index < t.length; index++) {
     const element = t[index];
     if (utils.isFile(element)) {
       let e = ex(element)
-      if (e) {
-        // 文件
+      if (e) { // 文件
         let d = ex(element,true)
         hasItem(db,d)
         db.unshift(d)
-        data.set(db)
+        data.set('songs',db)
       }
     } else {
         // 文件夹

@@ -44,16 +44,22 @@
         </div>
       </div>
     </div>
-    <div class="zi-dialog-root" style="overflow:hidden">
+    <div class="zi-dialog-root" id="local-wrap" style="overflow:hidden">
       <div class="zi-dialog-backdrop"></div>
       <div class="zi-dialog-backdrop responsive"></div>
       <div class="diy zi-dialog-wrapper">
         <div class="zi-dialog-content">
           <div class="body">
-            <div class="zi-note hint"><span class="zi-note-type">提示: </span>请添加你需要扫描的音乐文件夹</div>
+            <div class="zi-note hint" id="zi-scan-tips"><span class="zi-note-type">提示: </span>请添加你需要扫描的音乐文件夹</div>
             <div class="margin-top-sm">
               <button class="zi-btn" id="scanToMusic">扫描</button>
-              <input class="zi-input"/>
+              <input class="zi-input" id="searchToMusic" style="min-width: 40vw"/>
+            </div>
+            <div id="zi-music-ctrl">
+              <button class="zi-btn currentCtrl" id="local-music-played">Play</button>
+              <button class="zi-btn currentCtrl" id="local-music-volume">Volume</button>
+              <button class="zi-btn currentCtrl" id="local-music-loop">Loop</button>
+              <button class="zi-btn currentCtrl" id="local-music-mode">Mode</button>
             </div>
             <div class="local-wrap">
               <ul id="local-list"></ul>

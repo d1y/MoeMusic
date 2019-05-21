@@ -7,3 +7,5 @@ release/
 cli/
 *.css
 *.html
+src/pages/index.html
+src/pages/music/local.html

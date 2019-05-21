@@ -5,7 +5,7 @@ document.body
 
 let play = ()=> MUSIC.play(),
     pause = ()=> MUSIC.pause(),
-    src = e=> MUSIC.src = e,
+    Src = e=> MUSIC.src = e,
     loop = ()=> MUSIC.getAttribute('loop') ? MUSIC.removeAttribute('loop') : MUSIC.setAttribute('loop','loop'),
     VReduce = ()=> {
       if (MUSIC.volume*100 <= 10) {
@@ -21,7 +21,7 @@ let play = ()=> MUSIC.play(),
       }
       MUSIC.volume += .1
     },
-    currentTime = ()=> MUSIC.currentTime,
+    getTime = ()=> MUSIC.currentTime,
     setTime =  time=> MUSIC.currentTime = time,
     currentSrc = ()=> MUSIC.currentSrc,
     duration = ()=> MUSIC.duration,
@@ -31,12 +31,12 @@ let play = ()=> MUSIC.play(),
 module.exports = {
   play,
   pause,
-  src,
+  Src,
   loop,
   VReduce,
   VPlus,
   currentSrc,
-  currentTime,
+  getTime,
   setTime,
   duration,
   ended,

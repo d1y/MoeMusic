@@ -23,7 +23,20 @@ function isSongs() {
 isSongs()
 // music ctrl
 jq('#local-music-played')
-  .addEventListener('click', () => MUSIC.paused() ? MUSIC.play() : MUSIC.pause())
+  .addEventListener('click', function() {
+    let t = [
+      'pause',
+      'play'
+    ]
+    if (!MUSIC.currentSrc()) MUSIC.Src(db[parseInt(get('local_songs_index'))].src)
+    if (MUSIC.paused()) {
+      MUSIC.play()
+      this.innerHTML = t[0]
+    } else {
+      MUSIC.pause()
+      this.innerHTML = t[1]
+    }
+  })
 
 jq('#local-music-volume')
   .addEventListener('click', function (e) {
@@ -73,10 +86,57 @@ jq('#searchToMusic') // 搜索功能就意思意思了呗~
   })
 
 jq('#musicPlayer-close')
-  .addEventListener('click',()=> {
-    jq('#local-wrap')
-      .classList.add('zi-none')
+  .addEventListener('click',function(){
+    let wrap = jq('#local-wrap'),
+           n = `icono-caretUp btn`,
+           y = `icono-caretDown btn`,
+           z = `zi-none`
+    if (this.className == y) {
+      wrap.className = n + z
+    } else if (this.className == n) wrap.className = y + z
   })
+
+jq('span[title=上一曲]')
+  .addEventListener('click',ctrlPlay)
+
+jq('span[title=下一曲]')
+  .addEventListener('click',ctrlPlay)
+
+jq('#local-music-mode')
+  .addEventListener('click',function(){
+    let mode = this.innerHTML
+    let q = ['random','order']
+    let dev = mode == q[0] ? q[1] : q[0]
+    this.innerHTML = dev
+    set('local_songs_mode',dev)
+  })
+
+function ctrlPlay (e,bl) {
+  let currentTitle = this.title
+  let currentPage = parseInt(get('local_songs_index'))
+  let max = db.length-1 || 0
+  if (currentTitle == `上一曲`) {
+    currentPage = currentPage <= 0 ? max : --currentPage
+  } else if (currentTitle == `下一曲` || bl) {
+    currentPage = currentPage >= max ? 0 : ++currentPage
+  }
+  let currentSong = db[currentPage]
+  if (typeof e == 'boolean') { // 随机
+    let random = e=> Math.floor(Math.random() * e.length)
+    let range = random(db)
+    console.log(range)
+    currentSong = db[range]
+    currentPage = range
+  }
+  playTasks({
+    title: currentSong.name
+  })
+  set('local_songs_index',currentPage),
+  set('local_songs_url',currentSong.src)
+  set('local_songs_name',currentSong.name)
+  MUSIC.Src(currentSong.src)
+  MUSIC.play()
+}
 
 function loadSongs(db) {
   const ul = document.querySelector('#local-list')
@@ -101,21 +161,19 @@ function playTasks(obj) {
     jq('#currentTime')
       .innerHTML = ctx(MUSIC.getTime())
     bar.style.width = (MUSIC.getTime() / MUSIC.duration() * 100) + '%'
+    if (MUSIC.ended()) {
+      let mode = get('local_songs_mode') || `order`
+      if (mode.indexOf('"') >= 0 && mode.lastIndexOf('"')) {
+        mode = mode.substr(1,mode.length - 2)
+      }
+      clearInterval(loopCtrl)
+      if (mode == `order`) {
+        ctrlPlay(this,true)
+      } else if (mode == `random`) {
+        ctrlPlay(true)
+      }
+    }
   }, 1000)
-  if (MUSIC.ended()) {
-    // 默认情况下顺序播放!
-    let rawIndex = get('local_songs_index')
-        index = rawIndex >= get('songs').length ? 0 : ++rawIndex
-    let info = get('songs')[index]
-    set('local_songs_index',index)
-    set('local_songs_url',info.src)
-    set('local_songs_name',info.name)
-    MUSIC.Src(info.src)
-    playTasks({
-      title: info.name
-    })
-    MUSIC.play()
-  }
   function ctx(time,bl) {
     let s = Math.floor(time % 60)
     let t = Math.floor(time / 60)

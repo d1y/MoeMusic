@@ -63,12 +63,23 @@ loadSongs(db)
 
 {
   let index = get('local_songs_index'),
-      name = get('local_songs_name'),
-      url = get('local_songs_url')
-  MUSIC.Src(url)
+      name = get('local_songs_name')
   playTasks({
-    title: name
+    title: name.substr(1,name.length-2)
   })
+}
+
+{ 
+  /*
+  **  默认为顺序播放
+  **  于我个人而言,随机播放是没鸡毛用的 :(
+  */
+  let mode = get('local_songs_mode') || `order`
+  if (mode.indexOf('"') >= 0 && mode.lastIndexOf('"')) {
+    mode = mode.substr(1,mode.length - 2)
+  }
+  document.getElementById('local-music-mode')
+    .innerHTML = mode
 }
 
 window.go = () => window.location.reload()

@@ -1,4 +1,12 @@
-const { app,BrowserWindow,ipcMain } = require('electron')
+const {
+  app,
+  BrowserWindow,
+  ipcMain,
+  Tray,
+  Menu
+} = require('electron')
+
+const path = require('path')
 
 let win
 
@@ -15,6 +23,8 @@ const window = {
   icon: './src/static/logos/moe.png'
 }
 
+let appTray
+
 const createWindow = () => {
 
   win = new BrowserWindow(window)
@@ -30,13 +40,52 @@ const createWindow = () => {
   // 开发者模式
   win.webContents.openDevTools()
 
-  ipcMain.on('osx-close',()=> win.close())
-  
-  ipcMain.on('osx-min',()=> win.minimize())
+  let trayMenuTemplate = [{
+      label: '设置',
+      click: function () {} //打开相应页面
+    },
+    {
+      label: '帮助',
+      click: function () {}
+    },
+    {
+      label: '关于',
+      click: function () {}
+    },
+    {
+      label: '退出',
+      click: function () {
+        app.quit();
+        app.quit(); //因为程序设定关闭为最小化，所以调用两次关闭，防止最大化时一次不能关闭的情况
+      }
+    }
+  ];
+  let py = `src/static/assets/login.png`
+  let test = `sunTemplate.png`
+  console.log(py)
+  appTray = new Tray(path.join(__dirname,test)); //app.ico是app目录下的ico文件
+  console.log('创建图标')
+  //图标的上下文菜单
+  const contextMenu = Menu.buildFromTemplate(trayMenuTemplate);
 
-  ipcMain.on('osx-max',()=> {
+  //设置此托盘图标的悬停提示内容
+  appTray.setToolTip('我的托盘图标');
+
+  //设置此图标的上下文菜单
+  appTray.setContextMenu(contextMenu);
+  //单击右下角小图标显示应用
+  appTray.on('click', function () {
+    console.log('eyes')
+    win.show();
+  })
+  console.log(appTray)
+  ipcMain.on('osx-close', () => win.close())
+
+  ipcMain.on('osx-min', () => win.minimize())
+
+  ipcMain.on('osx-max', () => {
     if (process.platform == 'win32') return
-    win.isMaximized() ? win.unmaximize():win.maximize();
+    win.isMaximized() ? win.unmaximize() : win.maximize();
   })
 
   // user-agent

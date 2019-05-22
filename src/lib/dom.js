@@ -64,9 +64,11 @@ loadSongs(db)
 {
   let index = get('local_songs_index'),
       name = get('local_songs_name')
-  playTasks({
-    title: name.substr(1,name.length-2)
-  })
+  if (index || name) {
+    playTasks({
+      title: name.substr(1,name.length-2)
+    })
+  }
 }
 
 { 

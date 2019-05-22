@@ -15,6 +15,8 @@ function isSongs() {
   if (get('songs')) {
     jq('#zi-scan-tips')
       .classList.add('zi-none')
+    jq('#zi-music-ctrl')
+      .classList.remove('zi-none')
   } else {
     jq('#zi-music-ctrl')
       .classList.add('zi-none')
@@ -87,13 +89,10 @@ jq('#searchToMusic') // 搜索功能就意思意思了呗~
 
 jq('#musicPlayer-close')
   .addEventListener('click',function(){
-    let wrap = jq('#local-wrap'),
-           n = `icono-caretUp btn`,
-           y = `icono-caretDown btn`,
-           z = `zi-none`
-    if (this.className == y) {
-      wrap.className = n + z
-    } else if (this.className == n) wrap.className = y + z
+    let wrap = jq('#local-wrap'),n = `icono-caretUp btn`,
+    y = `icono-caretDown btn`,z = `zi-none`
+    this.className = this.className == y ? n : y
+    wrap.classList.toggle(z)
   })
 
 jq('span[title=上一曲]')
@@ -109,6 +108,11 @@ jq('#local-music-mode')
     let dev = mode == q[0] ? q[1] : q[0]
     this.innerHTML = dev
     set('local_songs_mode',dev)
+  })
+
+jq('#local')
+  .addEventListener('click',()=> {
+    jq('#local-wrap').classList.remove('zi-none')
   })
 
 function ctrlPlay (e,bl) {

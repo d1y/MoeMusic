@@ -78,6 +78,7 @@
   "dependencies": {
     "create-elements": "^1.1.9",
     "pac-proxy-agent": "^3.0.0",
-    "request": "^2.88.0"
+    "request": "^2.88.0",
+    "request-progress": "^3.0.0"
   }
 }
